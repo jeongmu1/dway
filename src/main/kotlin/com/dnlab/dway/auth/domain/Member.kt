@@ -13,27 +13,27 @@ class Member(
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long,
 
-        @Column(length = 45, unique = true)
+        @Column(length = 20, unique = true)
         val username: String,
 
         @Column(length = 60)
         var password: String,
 
-        @Column(length = 10)
+        @Column(length = 2)
         var korFirstName: String,
 
         @Column(length = 10)
         var korLastName: String,
 
-        @Column(length = 45)
+        @Column(length = 20)
         var engFirstName: String,
 
-        @Column(length = 45)
+        @Column(length = 20)
         var engLastName: String,
 
         @Enumerated(EnumType.STRING)
         @Column(length = 10)
-        val sex: Sex,
+        val gender: Gender,
 
         val birthDay: Date,
 

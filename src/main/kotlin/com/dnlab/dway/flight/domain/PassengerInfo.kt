@@ -1,8 +1,9 @@
 package com.dnlab.dway.flight.domain
 
-import com.dnlab.dway.auth.domain.Sex
+import com.dnlab.dway.auth.domain.Gender
 import com.dnlab.dway.region.domain.Country
 import jakarta.persistence.*
+import java.sql.Date
 
 @Entity
 class PassengerInfo(
@@ -22,7 +23,9 @@ class PassengerInfo(
         @Column(length = 45)
         val lastName: String,
 
-        val sex: Sex,
+        val gender: Gender,
+
+        val birthDay: Date
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

@@ -9,6 +9,12 @@ plugins {
     kotlin("plugin.allopen") version "1.8.22"
 }
 
+configurations {
+    all {
+        exclude(group = "org.springframework.boot", module = "spring-boot-starter-logging")
+    }
+}
+
 group = "com.dnlab"
 version = "0.0.1-SNAPSHOT"
 
@@ -24,6 +30,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-devtools")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
     // Database
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -43,13 +50,14 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     // Logging
-    implementation("ch.qos.logback:logback-classic")
+    implementation("org.springframework.boot:spring-boot-starter-log4j2")
 
     // Validation
     implementation("org.springframework.boot:spring-boot-starter-validation")
 
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("io.mockk:mockk:1.12.0")
 }
 
 tasks.withType<KotlinCompile> {
