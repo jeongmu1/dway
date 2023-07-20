@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -37,6 +38,7 @@ class TokenServiceTest {
     }
 
     @Test
+    @DisplayName("Authentication으로 accessToken을 생성할 수 있어야 한다")
     fun createAccessToken() {
         val accessToken = tokenService.createAccessToken(authentication)
 
@@ -44,11 +46,13 @@ class TokenServiceTest {
     }
 
     @Test
+    @DisplayName("RefreshToken을 생성할 수 있어야 한다")
     fun createRefreshToken() {
         assertTrue(tokenService.createRefreshToken().isNotBlank())
     }
 
     @Test
+    @DisplayName("AccessToken으로 부터 Authentication객체를 추출할 수 있어야 한다")
     fun getAuthentication() {
         val authentication = UsernamePasswordAuthenticationToken(
             User("test", "", setOf(SimpleGrantedAuthority("ROLE_MEMBER"))),
@@ -60,12 +64,14 @@ class TokenServiceTest {
     }
 
     @Test
+    @DisplayName("AccessToken의 유효성 검증을 수행할 수 있어야 한다")
     fun validateToken() {
         val token = tokenService.createAccessToken(authentication)
         assertTrue(tokenService.validateToken(token))
     }
 
     @Test
+    @DisplayName("HttpHeader로부터 토큰을 추출할 수 있어야 한다")
     fun resolveToken() {
         val token = tokenService.createAccessToken(authentication)
         val request = mock(HttpServletRequest::class.java)

@@ -11,12 +11,14 @@ import com.dnlab.dway.region.domain.Country
 import com.dnlab.dway.region.repository.CountryRepository
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.mockito.ArgumentCaptor
 import org.mockito.Captor
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations.openMocks
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.crypto.password.PasswordEncoder
 import java.util.*
 import java.sql.Date
@@ -49,11 +51,13 @@ internal class AuthServiceImplRegistrationTest {
             authorityRepository = authorityRepository,
             passwordEncoder = passwordEncoder,
             tokenRepository = mock(TokenRepository::class.java),
-            countryRepository = countryRepository
+            countryRepository = countryRepository,
+            authenticationManagerBuilder = mock(AuthenticationManagerBuilder::class.java)
         )
     }
 
     @Test
+    @DisplayName("중복된 아이디가 있을 경우 예외를 발생시켜야 한다")
     fun processRegistration_DuplicatedUsername() {
         val registrationRequestDto = RegistrationRequestDto(
             username = "testUsername",
@@ -79,6 +83,7 @@ internal class AuthServiceImplRegistrationTest {
     }
 
     @Test
+    @DisplayName("비밀번호와 확인 비밀번호가 일치하지 않을 경우 예외를 발생시켜야 한다")
     fun processRegistration_PasswordMismatch() {
         val registrationRequestDto = RegistrationRequestDto(
             username = "testUsername",
