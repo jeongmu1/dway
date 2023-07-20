@@ -11,7 +11,7 @@ import java.sql.Timestamp
 class Member(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id: Long,
+        val id: Long = 0L,
 
         @Column(length = 20, unique = true)
         val username: String,

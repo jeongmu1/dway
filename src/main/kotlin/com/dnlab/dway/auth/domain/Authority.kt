@@ -6,7 +6,7 @@ import jakarta.persistence.*
 class Authority(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id: Long,
+        val id: Long = 0L,
 
         @ManyToOne(fetch = FetchType.EAGER)
         val member: Member,

@@ -35,6 +35,7 @@ dependencies {
     // Database
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("com.mysql:mysql-connector-j")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
 
     // Security
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")

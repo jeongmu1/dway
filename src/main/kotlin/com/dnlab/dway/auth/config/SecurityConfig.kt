@@ -31,7 +31,7 @@ class SecurityConfig(
                 .accessDeniedHandler(accessDeniedHandler)
         }
         sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
-        authorizeHttpRequests { it.requestMatchers("/**").permitAll() }
+        authorizeHttpRequests { it.requestMatchers("/api/auth/**").permitAll() }
     }.orBuild
 
     @Bean
