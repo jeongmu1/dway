@@ -23,7 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import java.util.*
 import java.sql.Date
 
-internal class AuthServiceImplRegistrationTest {
+internal class RegistrationTest {
 
     private lateinit var authService: AuthService
 

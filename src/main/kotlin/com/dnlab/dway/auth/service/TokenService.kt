@@ -33,12 +33,12 @@ class TokenService(private val jwtProperties: JwtProperties) {
         val expirationDate = Date(now.time + jwtProperties.accessTokenExpiration)
 
         return Jwts.builder()
-                .setSubject(authentication.name)
-                .setIssuedAt(now)
-                .setExpiration(expirationDate)
-                .claim(authoritiesKey, authorities)
-                .signWith(key, SignatureAlgorithm.HS384)
-                .compact()
+            .setSubject(authentication.name)
+            .setIssuedAt(now)
+            .setExpiration(expirationDate)
+            .claim(authoritiesKey, authorities)
+            .signWith(key, SignatureAlgorithm.HS384)
+            .compact()
     }
 
     fun createRefreshToken(): String {
@@ -47,11 +47,11 @@ class TokenService(private val jwtProperties: JwtProperties) {
         val expirationDate = Date(now.time + jwtProperties.refreshTokenExpiration)
 
         return Jwts.builder()
-                .setSubject(token)
-                .setIssuedAt(now)
-                .setExpiration(expirationDate)
-                .signWith(key, SignatureAlgorithm.HS384)
-                .compact()
+            .setSubject(token)
+            .setIssuedAt(now)
+            .setExpiration(expirationDate)
+            .signWith(key, SignatureAlgorithm.HS384)
+            .compact()
     }
 
     fun getAuthentication(token: String): Authentication {
@@ -78,15 +78,19 @@ class TokenService(private val jwtProperties: JwtProperties) {
         return false
     }
 
-    fun resolveToken(request: HttpServletRequest): String? {
-        val bearerToken = request.getHeader(jwtProperties.header)
-        if (bearerToken.isNotBlank() && bearerToken.startsWith("Bearer ")) return bearerToken.drop(7)
+    fun resolveToken(request: HttpServletRequest?): String? {
+        val bearerToken = request?.getHeader(jwtProperties.header)
+        bearerToken?.let {
+            with(bearerToken) {
+                if (isNotBlank() && startsWith("Bearer")) return drop(7)
+            }
+        }
         return null
     }
 
     private fun getClaimsByToken(token: String): Claims = Jwts.parserBuilder()
-            .setSigningKey(key)
-            .build()
-            .parseClaimsJws(token)
-            .body
+        .setSigningKey(key)
+        .build()
+        .parseClaimsJws(token)
+        .body
 }
