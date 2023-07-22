@@ -1,25 +1,27 @@
 package com.dnlab.dway.auth.service
 
-import com.dnlab.dway.auth.config.DuplicatedUsernameException
+import com.dnlab.dway.auth.exception.DuplicatedUsernameException
 import com.dnlab.dway.auth.domain.Authority
 import com.dnlab.dway.auth.domain.Member
 import com.dnlab.dway.auth.domain.Role
 import com.dnlab.dway.auth.domain.Token
 import com.dnlab.dway.auth.dto.*
+import com.dnlab.dway.auth.exception.InvalidTokenException
 import com.dnlab.dway.auth.repository.AuthorityRepository
 import com.dnlab.dway.auth.repository.MemberRepository
 import com.dnlab.dway.auth.repository.TokenRepository
+import com.dnlab.dway.region.domain.Country
 import com.dnlab.dway.region.repository.CountryRepository
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
+import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.lang.IllegalArgumentException
 
 @Service
 class AuthServiceImpl(
@@ -41,6 +43,9 @@ class AuthServiceImpl(
             throw IllegalArgumentException("비밀번호와 비밀번호 확인이 일치하지 않습니다.")
         }
 
+        val phoneCountry = findCountryById(requestDto.phoneCountry, CountryOf.PHONE)
+        val country = findCountryById(requestDto.country, CountryOf.RESIDENCE)
+
         val member = memberRepository.save(
             Member(
                 username = requestDto.username,
@@ -52,9 +57,9 @@ class AuthServiceImpl(
                 gender = requestDto.gender,
                 birthDay = requestDto.birthDay,
                 email = requestDto.email,
-                phoneCountry = (countryRepository.findCountryById(requestDto.country))!!,
+                phoneCountry = phoneCountry,
                 phoneNumber = requestDto.phone,
-                country = (countryRepository.findCountryById(requestDto.country))!!
+                country = country
             )
         )
 
@@ -96,6 +101,44 @@ class AuthServiceImpl(
     }
 
     override fun refreshToken(requestDto: RefreshTokenRequestDto): LoginResponseDto {
-        TODO("Not yet implemented")
+        val refreshToken = requestDto.refreshToken
+        val prevTokenInfo =
+            tokenRepository.findTokenByToken(refreshToken) ?: throw InvalidTokenException("잘못되거나 만료된 토큰입니다.")
+        tokenRepository.delete(prevTokenInfo)
+
+        val newRefreshToken = tokenService.createRefreshToken()
+        tokenRepository.save(Token(token = newRefreshToken, username = prevTokenInfo.username))
+
+        val grantedAuthorities = authorityRepository.findAuthoritiesByMemberUsername(prevTokenInfo.username)
+            .map { GrantedAuthority { it.role.toString() } }
+
+        return LoginResponseDto(
+            accessToken = tokenService.createAccessToken(
+                UsernamePasswordAuthenticationToken(
+                    prevTokenInfo.username,
+                    null,
+                    grantedAuthorities
+                )
+            ),
+            refreshToken
+        )
+    }
+
+    private fun findCountryById(id: String, countryOf: CountryOf): Country {
+        val country = countryRepository.findCountryById(id)
+        checkNotNull(country) {
+            val message: String = when (countryOf) {
+                CountryOf.RESIDENCE -> "거주"
+                CountryOf.PHONE -> "휴대전화"
+            }
+
+            throw NoSuchElementException("해당 $message 국가를 찾을 수 없습니다: $id")
+        }
+        return country
+    }
+
+    private enum class CountryOf {
+        RESIDENCE,
+        PHONE
     }
 }

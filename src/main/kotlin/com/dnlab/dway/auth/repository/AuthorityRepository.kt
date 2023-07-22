@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface AuthorityRepository: JpaRepository<Authority, Long> {
     fun findAuthoritiesByMember(member: Member): Set<Authority>
+
+    fun findAuthoritiesByMemberUsername(username: String): Set<Authority>
 }

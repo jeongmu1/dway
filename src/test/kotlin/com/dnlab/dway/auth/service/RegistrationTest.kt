@@ -1,6 +1,6 @@
 package com.dnlab.dway.auth.service
 
-import com.dnlab.dway.auth.config.DuplicatedUsernameException
+import com.dnlab.dway.auth.exception.DuplicatedUsernameException
 import com.dnlab.dway.auth.domain.Gender
 import com.dnlab.dway.auth.domain.Member
 import com.dnlab.dway.auth.dto.RegistrationRequestDto
@@ -22,8 +22,10 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.crypto.password.PasswordEncoder
 import java.util.*
 import java.sql.Date
+import kotlin.NoSuchElementException
 
 internal class RegistrationTest {
+    private val password = "testPassword"
 
     private lateinit var authService: AuthService
 
@@ -59,22 +61,7 @@ internal class RegistrationTest {
     @Test
     @DisplayName("중복된 아이디가 있을 경우 예외를 발생시켜야 한다")
     fun processRegistration_DuplicatedUsername() {
-        val registrationRequestDto = RegistrationRequestDto(
-            username = "testUsername",
-            password = "testPassword",
-            passwordConfirm = "testPassword",
-            korFirstName = "테",
-            korLastName = "스트",
-            engFirstName = "TE",
-            engLastName = "ST",
-            gender = Gender.MALE,
-            birthDay = Date(Calendar.getInstance().timeInMillis),
-            email = "test@test.com",
-            phoneCountry = "KR",
-            phone = "010-0000-1111",
-            country = "KR"
-        )
-
+        val registrationRequestDto = createRegistrationRequestDto()
         `when`(memberRepository.existsMemberByUsername(anyString())).thenReturn(true)
 
         assertThrows(DuplicatedUsernameException::class.java) {
@@ -85,22 +72,7 @@ internal class RegistrationTest {
     @Test
     @DisplayName("비밀번호와 확인 비밀번호가 일치하지 않을 경우 예외를 발생시켜야 한다")
     fun processRegistration_PasswordMismatch() {
-        val registrationRequestDto = RegistrationRequestDto(
-            username = "testUsername",
-            password = "testPassword123",
-            passwordConfirm = "testPassword",
-            korFirstName = "테",
-            korLastName = "스트",
-            engFirstName = "TE",
-            engLastName = "ST",
-            gender = Gender.MALE,
-            birthDay = Date(Calendar.getInstance().timeInMillis),
-            email = "test@test.com",
-            phoneCountry = "KR",
-            phone = "010-0000-1111",
-            country = "KR"
-        )
-
+        val registrationRequestDto = createRegistrationRequestDto(withPasswordConfirm = "wrongPassword")
         `when`(memberRepository.existsMemberByUsername(anyString())).thenReturn(false)
 
         assertThrows(IllegalArgumentException::class.java) {
@@ -109,8 +81,18 @@ internal class RegistrationTest {
     }
 
     @Test
+    @DisplayName("국가 정보 조회에 실패할 시 예외를 발생시켜야 한다")
+    fun processRegistration_NoSuchCountry() {
+        val registrationRequestDto = createRegistrationRequestDto()
+        `when`(countryRepository.findCountryById(anyString())).thenReturn(null)
+
+        assertThrows(NoSuchElementException::class.java) {
+            authService.processRegistration(registrationRequestDto)
+        }
+    }
+
+    @Test
     fun processRegistration_Success() {
-        val password = "password"
         val countryCode = "KR"
         val country = Country(
             id = "KR",
@@ -138,28 +120,29 @@ internal class RegistrationTest {
             country = country
         )
         `when`(memberRepository.save(any())).thenReturn(member)
-
-        val registrationRequestDto = RegistrationRequestDto(
-            username = "testUsername",
-            password = password,
-            passwordConfirm = password,
-            korFirstName = "테",
-            korLastName = "스트",
-            engFirstName = "TE",
-            engLastName = "ST",
-            gender = Gender.MALE,
-            birthDay = Date(Calendar.getInstance().timeInMillis),
-            email = "test@test.com",
-            phoneCountry = countryCode,
-            phone = "010-0000-1111",
-            country = countryCode
-        )
+        val registrationRequestDto = createRegistrationRequestDto()
 
         authService.processRegistration(registrationRequestDto)
 
         verify(passwordEncoder).encode(captor.capture())
         assert(captor.value == password)
     }
+
+    private fun createRegistrationRequestDto(withPasswordConfirm: String = password) = RegistrationRequestDto(
+        username = "testUsername",
+        password = password,
+        passwordConfirm = withPasswordConfirm,
+        korFirstName = "테",
+        korLastName = "스트",
+        engFirstName = "TE",
+        engLastName = "ST",
+        gender = Gender.MALE,
+        birthDay = Date(Calendar.getInstance().timeInMillis),
+        email = "test@test.com",
+        phoneCountry = "KR",
+        phone = "010-0000-1111",
+        country = "KR"
+    )
 }
 
 

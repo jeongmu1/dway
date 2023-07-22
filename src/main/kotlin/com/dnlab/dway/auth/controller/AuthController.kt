@@ -1,7 +1,8 @@
 package com.dnlab.dway.auth.controller
 
-import com.dnlab.dway.auth.config.DuplicatedUsernameException
+import com.dnlab.dway.auth.exception.DuplicatedUsernameException
 import com.dnlab.dway.auth.dto.*
+import com.dnlab.dway.auth.exception.InvalidTokenException
 import com.dnlab.dway.auth.service.AuthService
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.lang.IllegalArgumentException
+import java.util.NoSuchElementException
 
 @RestController
 @RequestMapping("/api/auth")
@@ -28,6 +30,8 @@ class AuthController(
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.message)
         } catch (e: DuplicatedUsernameException) {
             ResponseEntity.status(HttpStatus.CONFLICT).body(e.message)
+        } catch (e: NoSuchElementException) {
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.message)
         }
     }
 
@@ -44,8 +48,12 @@ class AuthController(
         }
     }
 
-    @PostMapping("/refresh-token")
-    fun refreshToken(@RequestBody requestDto: RefreshTokenRequestDto): ResponseEntity<LoginResponseDto> {
-        return ResponseEntity.ok(authService.refreshToken(requestDto))
+    @PostMapping("/reissue")
+    fun refreshToken(@RequestBody requestDto: RefreshTokenRequestDto): ResponseEntity<*> {
+        return try {
+            ResponseEntity.ok(authService.refreshToken(requestDto))
+        } catch (e: InvalidTokenException) {
+            ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.message)
+        }
     }
 }
