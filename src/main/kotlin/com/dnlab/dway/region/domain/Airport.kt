@@ -13,7 +13,7 @@ class Airport(
 
     @Enumerated(EnumType.STRING)
     val regionCategory: RegionCategory,
-
+    val regionName: String,
     val korName: String,
     val engName: String
 ) {
