@@ -14,7 +14,7 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
 
-class TokenServiceTest {
+internal class TokenServiceTest {
 
     private lateinit var tokenService: TokenService
 

@@ -38,3 +38,6 @@ out/
 
 ### Git ###
 /src/main/resources/application.yml
+
+## log ###
+/logs/

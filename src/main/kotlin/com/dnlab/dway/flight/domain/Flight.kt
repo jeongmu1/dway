@@ -9,7 +9,7 @@ import java.sql.Timestamp
 class Flight(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id: Long,
+        val id: Long = 0L,
 
         @Column(length = 10)
         val code: String,

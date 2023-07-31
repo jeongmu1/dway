@@ -18,7 +18,7 @@ import org.mockito.MockitoAnnotations.openMocks
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.crypto.password.PasswordEncoder
 
-class RefreshTokenTest {
+internal class RefreshTokenTest {
     private lateinit var authService: AuthService
 
     private val tokenService: TokenService =
