@@ -2,8 +2,8 @@ package com.dnlab.dway.flight.service
 
 import com.dnlab.dway.flight.domain.Flight
 import com.dnlab.dway.flight.domain.FlightSeats
-import com.dnlab.dway.flight.dto.NewFlightRequestDto
-import com.dnlab.dway.flight.dto.NewFlightResponseDto
+import com.dnlab.dway.flight.dto.request.NewFlightRequestDto
+import com.dnlab.dway.flight.dto.response.NewFlightResponseDto
 import com.dnlab.dway.flight.repository.AircraftRepository
 import com.dnlab.dway.flight.repository.AirportRepository
 import com.dnlab.dway.flight.repository.FlightRepository

@@ -3,7 +3,7 @@ package com.dnlab.dway.auth.service
 import com.dnlab.dway.auth.exception.DuplicatedUsernameException
 import com.dnlab.dway.auth.domain.Gender
 import com.dnlab.dway.auth.domain.Member
-import com.dnlab.dway.auth.dto.RegistrationRequestDto
+import com.dnlab.dway.auth.dto.request.RegistrationRequestDto
 import com.dnlab.dway.auth.repository.AuthorityRepository
 import com.dnlab.dway.auth.repository.MemberRepository
 import com.dnlab.dway.auth.repository.TokenRepository

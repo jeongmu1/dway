@@ -1,6 +1,6 @@
 package com.dnlab.dway.flight.controller
 
-import com.dnlab.dway.flight.dto.NewFlightRequestDto
+import com.dnlab.dway.flight.dto.request.NewFlightRequestDto
 import com.dnlab.dway.flight.service.FlightService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

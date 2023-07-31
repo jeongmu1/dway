@@ -2,7 +2,7 @@ package com.dnlab.dway.auth.service
 
 import com.dnlab.dway.auth.config.JwtProperties
 import com.dnlab.dway.auth.domain.Token
-import com.dnlab.dway.auth.dto.RefreshTokenRequestDto
+import com.dnlab.dway.auth.dto.request.RefreshTokenRequestDto
 import com.dnlab.dway.auth.exception.InvalidTokenException
 import com.dnlab.dway.auth.repository.AuthorityRepository
 import com.dnlab.dway.auth.repository.MemberRepository

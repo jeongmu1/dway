@@ -2,7 +2,7 @@ package com.dnlab.dway.auth.integration
 
 import com.dnlab.dway.annotaions.IntegrationTest
 import com.dnlab.dway.auth.domain.Gender
-import com.dnlab.dway.auth.dto.RegistrationRequestDto
+import com.dnlab.dway.auth.dto.request.RegistrationRequestDto
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test

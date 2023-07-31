@@ -5,7 +5,11 @@ import com.dnlab.dway.auth.domain.Authority
 import com.dnlab.dway.auth.domain.Member
 import com.dnlab.dway.auth.domain.Role
 import com.dnlab.dway.auth.domain.Token
-import com.dnlab.dway.auth.dto.*
+import com.dnlab.dway.auth.dto.request.LoginRequestDto
+import com.dnlab.dway.auth.dto.request.RefreshTokenRequestDto
+import com.dnlab.dway.auth.dto.request.RegistrationRequestDto
+import com.dnlab.dway.auth.dto.response.LoginResponseDto
+import com.dnlab.dway.auth.dto.response.RegistrationResponseDto
 import com.dnlab.dway.auth.exception.InvalidTokenException
 import com.dnlab.dway.auth.repository.AuthorityRepository
 import com.dnlab.dway.auth.repository.MemberRepository

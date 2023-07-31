@@ -3,7 +3,7 @@ package com.dnlab.dway.flight.service
 import com.dnlab.dway.flight.domain.Aircraft
 import com.dnlab.dway.flight.domain.Flight
 import com.dnlab.dway.flight.domain.Manufacture
-import com.dnlab.dway.flight.dto.NewFlightRequestDto
+import com.dnlab.dway.flight.dto.request.NewFlightRequestDto
 import com.dnlab.dway.flight.repository.AircraftRepository
 import com.dnlab.dway.flight.repository.AirportRepository
 import com.dnlab.dway.flight.repository.FlightRepository

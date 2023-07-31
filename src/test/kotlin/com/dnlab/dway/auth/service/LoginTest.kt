@@ -2,7 +2,7 @@ package com.dnlab.dway.auth.service
 
 import com.dnlab.dway.auth.domain.Gender
 import com.dnlab.dway.auth.domain.Member
-import com.dnlab.dway.auth.dto.LoginRequestDto
+import com.dnlab.dway.auth.dto.request.LoginRequestDto
 import com.dnlab.dway.auth.repository.MemberRepository
 import com.dnlab.dway.region.domain.Country
 import org.junit.jupiter.api.Assertions.assertNotNull

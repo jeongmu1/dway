@@ -2,6 +2,9 @@ package com.dnlab.dway.auth.controller
 
 import com.dnlab.dway.auth.exception.DuplicatedUsernameException
 import com.dnlab.dway.auth.dto.*
+import com.dnlab.dway.auth.dto.request.LoginRequestDto
+import com.dnlab.dway.auth.dto.request.RefreshTokenRequestDto
+import com.dnlab.dway.auth.dto.request.RegistrationRequestDto
 import com.dnlab.dway.auth.exception.InvalidTokenException
 import com.dnlab.dway.auth.service.AuthService
 import org.springframework.beans.factory.annotation.Value

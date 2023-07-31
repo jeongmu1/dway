@@ -1,4 +1,4 @@
-package com.dnlab.dway.flight.dto
+package com.dnlab.dway.flight.dto.response
 
 import java.sql.Timestamp
 

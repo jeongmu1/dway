@@ -1,6 +1,7 @@
-package com.dnlab.dway.auth.dto
+package com.dnlab.dway.auth.dto.request
 
 import com.dnlab.dway.auth.domain.Gender
+import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Pattern
 import java.sql.Date
 
@@ -26,8 +27,10 @@ data class RegistrationRequestDto(
         @Pattern(regexp = "^[A-Z]{2,20}\$", message = "양식에 맞지 않는 영문 이름")
         val engLastName: String,
 
+        @NotNull(message = "성별은 반드시 포함되어야 합니다.")
         val gender: Gender,
 
+        @NotNull(message = "생년월일은 반드시 포함되어야 합니다.")
         val birthDay: Date,
 
         @Pattern(regexp = "^\\w+([.-]?\\w+)*@\\w+([.-]?\\w+)*(\\.\\w{2,3})+\$\n", message = "양식에 맞지 않는 이메일")
