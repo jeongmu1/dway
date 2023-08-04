@@ -38,6 +38,7 @@ out/
 
 ### Git ###
 /src/main/resources/application.yml
+keystore.p12
 
 ## log ###
 /logs/
