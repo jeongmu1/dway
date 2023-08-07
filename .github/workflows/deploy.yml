@@ -34,21 +34,21 @@ jobs:
       with:
         character set server: 'utf8'
         mysql database: 'dway'
-        mysql user: ${{ secrets.MYSQL_USERNAME }}
-        mysql password: ${{ secrets.MYSQL_PASSWORD }}
+        mysql user: '${{ secrets.MYSQL_USERNAME }}'
+        mysql password: '${{ secrets.MYSQL_PASSWORD }}'
 
     - name: Set .yml for main
       run: |
         cd ./src/main/resources
         touch ./application.yml
-        echo "${{ secrets.APPLICATION_SETTINGS }}" >> ./application.yml
+        echo "${{ secrets.APPLICATION_SETTINGS }}" > ./application.yml
       shell: bash
 
     - name: Set test.yml for main
       run: |
         cd ./src/main/resources
         touch ./application-test.yml
-        echo "${{ secrets.APPLICATION_TEST_SETTINGS }}" >> ./application-test.yml
+        echo "${{ secrets.APPLICATION_TEST_SETTINGS }}" > ./application-test.yml
 
     - name: Backup application.yml and Set application-test.yml
       run: |
@@ -99,5 +99,5 @@ jobs:
         aws deploy create-deployment \
           --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
           --deployment-config-name CodeDeployDefault.AllAtOnce \
-          --deployment-group-name ${{ env.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }} \
+          --deployment-group-name ${{ env.CODE_DEPLOY_APPLICATION_GROUP_NAME }} \
           --s3-location bucket=$S3_BUCKET_NAME,key=$GITHUB_SHA.zip,bundleType=zip
