@@ -29,12 +29,30 @@ jobs:
         java-version: '17'
         distribution: 'corretto'
 
+    - name: Setup MySQL
+      uses: samin/mysql-action@v1
+      with:
+        character set server: 'utf8'
+        mysql database: 'dway'
+        mysql user: ${{ secrets.MYSQL_USERNAME }}
+        mysql password: ${{ secrets.MYSQL_PASSWORD }}
+
     - name: Set .yml for main
       run: |
         cd ./src/main/resources
         touch ./application.yml
         echo "${{ secrets.APPLICATION.SETTINGS }}" >> ./application.yml
       shell: bash
+
+    - name: Gradle Caching
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
