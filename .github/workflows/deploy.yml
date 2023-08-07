@@ -42,10 +42,16 @@ jobs:
           echo "${{ secrets.APPLICATION_SETTINGS }}" >> ./application.yml
         shell: bash
 
+      - name: Restore SSH key
+        run: |
+          echo "${{ secrets.PRIVATE_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
+        shell: bash
+
       # SSH Tunneling Setup
       - name: Set up SSH Tunnel
         run: |
-          ssh -f -N -L 3306:${{ secrets.RDS_ENDPOINT }}:3306 ubuntu@${{ secrets.HOST }} -i ${{ secrets.PRIVATE_KEY }}
+          ssh -f -N -L 3306:${{ secrets.RDS_ENDPOINT }}:3306 ubuntu@${{ secrets.HOST }} -i private_key.pem ${{ secrets.PRIVATE_KEY }}
 
       # Build Gradle
       - name: Build Gradle
@@ -68,7 +74,7 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ubuntu
-          key: ${{ secrets.PRIVATE_KEY }}
+          key: private_key.pem
           script: |
             docker rm -f $(docker ps -qa)
             docker rmi ${{ secrets.DOCKER_USERNAME }}/dway
