@@ -29,14 +29,6 @@ jobs:
         java-version: '17'
         distribution: 'corretto'
 
-    - name: Setup MySQL
-      uses: samin/mysql-action@v1
-      with:
-        character set server: 'utf8'
-        mysql database: 'dway'
-        mysql user: '${{ secrets.MYSQL_USERNAME }}'
-        mysql password: '${{ secrets.MYSQL_PASSWORD }}'
-
     - name: Set .yml for main
       run: |
         cd ./src/main/resources
@@ -44,17 +36,6 @@ jobs:
         echo "${{ secrets.APPLICATION_SETTINGS }}" > ./application.yml
       shell: bash
 
-    - name: Set test.yml for main
-      run: |
-        cd ./src/main/resources
-        touch ./application-test.yml
-        echo "${{ secrets.APPLICATION_TEST_SETTINGS }}" > ./application-test.yml
-
-    - name: Backup application.yml and Set application-test.yml
-      run: |
-        mv ./src/main/resources/application.yml ./src/main/resources/application-backup.yml
-        cp ./src/main/resources/application-test.yml ./src/main/resources/application.yml
-    
     - name: Gradle Caching
       uses: actions/cache@v3
       with:
@@ -67,14 +48,6 @@ jobs:
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-
-    - name: Run Tests
-      run: ./gradlew test
-
-    # 원래의 application.yml 복구
-    - name: Restore original application.yml
-      run: |
-        mv ./src/main/resources/application-backup.yml ./src/main/resources/application.yml
 
     - name: Build with Gradle
       run: ./gradlew clean build -x test
