@@ -52,7 +52,7 @@ jobs:
       # SSH Tunneling Setup
       - name: Set up SSH Tunnel
         run: |
-          ssh -f -N -L 3306:${{ secrets.RDS_ENDPOINT }}:3306 -i "private_key.pem" ubuntu@${{ secrets.HOST }}
+          ssh -f -N -L 3306:${{ secrets.RDS_ENDPOINT }}:3306 ubuntu@${{ secrets.HOST }} -i "private_key.pem"
 
       # Build Gradle
       - name: Build Gradle
