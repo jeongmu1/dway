@@ -42,10 +42,17 @@ jobs:
           echo "${{ secrets.APPLICATION_SETTINGS }}" >> ./application.yml
         shell: bash
 
+      # Save PRIVATE_KEY to file
+      - name: Save Private Key
+        run: |
+          echo "${{ secrets.PRIVATE_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
+        shell: bash
+
       # SSH Tunneling Setup
       - name: Set up SSH Tunnel
         run: |
-          ssh -f -N -L 3306:${{ secrets.RDS_ENDPOINT }}:3306 -i ${{ secrets.PRIVATE_KEY }} ubuntu@${{ secrets.HOST }}
+          ssh -f -N -L 3306:${{ secrets.RDS_ENDPOINT }}:3306 -i private_key.pem ubuntu@${{ secrets.HOST }}
 
       # Build Gradle
       - name: Build Gradle
