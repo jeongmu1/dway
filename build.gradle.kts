@@ -10,6 +10,14 @@ plugins {
     kotlin("plugin.allopen") version "1.8.22"
 }
 
+allOpen {
+    annotation("javax.persistence.Entity")
+}
+
+noArg {
+    annotation("javax.persistence.Entity")
+}
+
 configurations {
     all {
         exclude(group = "org.springframework.boot", module = "spring-boot-starter-logging")
