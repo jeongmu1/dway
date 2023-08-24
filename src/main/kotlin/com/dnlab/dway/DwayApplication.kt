@@ -8,6 +8,7 @@ import com.dnlab.dway.region.domain.Airport
 import com.dnlab.dway.region.domain.Country
 import com.dnlab.dway.region.domain.RegionCategory
 import com.dnlab.dway.region.repository.CountryRepository
+import jakarta.annotation.PostConstruct
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
@@ -15,11 +16,17 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.transaction.annotation.Transactional
+import java.util.TimeZone
 
 @SpringBootApplication
 @EnableConfigurationProperties(JwtProperties::class)
 @ConfigurationPropertiesScan
 class DwayApplication {
+
+    @PostConstruct
+    fun started() {
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"))
+    }
 
     @Bean
     @Transactional

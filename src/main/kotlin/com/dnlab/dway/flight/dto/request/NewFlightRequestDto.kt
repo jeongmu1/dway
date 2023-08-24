@@ -1,5 +1,6 @@
 package com.dnlab.dway.flight.dto.request
 
+import com.dnlab.dway.common.annotation.validation.AirportCodeFormat
 import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Pattern
@@ -10,9 +11,9 @@ data class NewFlightRequestDto(
     val aircraftModel: String,
     @Pattern(regexp = "^DW\\d{3}\$", message = "올바른 항공편 번호 양식으로 입력해주세요.")
     val code: String,
-    @Pattern(regexp = "^[A-Z]{3}\$", message = "올바른 공항 코드를 입력해주세요.")
+    @AirportCodeFormat
     val departureAirport: String,
-    @Pattern(regexp = "^[A-Z]{3}\$", message = "올바른 공항 코드를 입력해주세요.")
+    @AirportCodeFormat
     val arrivalAirport: String,
     @NotNull(message = "출발 시간은 반드시 포함되어야 합니다.")
     val departureTime: Timestamp,

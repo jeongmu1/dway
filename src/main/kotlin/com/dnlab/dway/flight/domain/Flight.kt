@@ -14,7 +14,7 @@ class Flight(
         @Column(length = 10)
         val code: String,
 
-        @ManyToOne(fetch = FetchType.LAZY)
+        @ManyToOne(fetch = FetchType.EAGER)
         val aircraft: Aircraft,
 
         @ManyToOne(fetch = FetchType.LAZY)
@@ -26,6 +26,9 @@ class Flight(
         val departureTime: Timestamp,
 
         val arrivalTime: Timestamp,
+
+        @OneToMany(mappedBy = "flight", fetch = FetchType.LAZY)
+        val flightSeats: MutableList<FlightSeats> = ArrayList(),
 
         @CreatedDate
         var createdDate: Timestamp? = null,

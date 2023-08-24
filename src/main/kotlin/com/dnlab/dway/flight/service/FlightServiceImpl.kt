@@ -39,10 +39,15 @@ class FlightServiceImpl(
         )
         flightSeatsRepository.saveAll(requestDto.flightSeatInfo.map {
             FlightSeats(
-                fare = it.fare,
+                fareGrade = it.fareGrade,
                 maxPassengers = it.maxPassengers,
                 flight = flight,
-                grade = it.grade
+                grade = it.grade,
+                fare = it.fare,
+                inflightMeal = it.inflightMeal,
+                checkedBaggageWeight = it.checkedBaggageWeight,
+                carryOnBaggageCount = it.carryOnBaggageCount,
+                carryOnBaggageWeight = it.carryOnBaggageWeight
             )
         })
 
