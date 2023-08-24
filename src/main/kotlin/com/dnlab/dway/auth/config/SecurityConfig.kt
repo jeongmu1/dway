@@ -34,7 +34,7 @@ class SecurityConfig(
         authorizeHttpRequests {
             with (it) {
                 requestMatchers("/api/flight/new").hasRole("ADMIN")
-                requestMatchers("/api/auth/**", "/api/flight/**").permitAll()
+                requestMatchers("/api/auth/**", "/api/flight/**", "/favicon.ico", "/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs/**", "/swagger-ui.html", "/webjars/**", "/error").permitAll()
             }
         }
     }.orBuild
