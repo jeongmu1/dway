@@ -5,12 +5,13 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.server.ResponseStatusException
 
 @ControllerAdvice
 class GlobalExceptionHandler {
 
     @ExceptionHandler(value = [ConstraintViolationException::class])
-    fun handleConstraintViolationException(e: ConstraintViolationException): ResponseEntity<String> {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.message)
+    fun handleConstraintViolationException(e: ConstraintViolationException): ResponseEntity<*> {
+        throw ResponseStatusException(HttpStatus.BAD_REQUEST, e.message)
     }
 }
