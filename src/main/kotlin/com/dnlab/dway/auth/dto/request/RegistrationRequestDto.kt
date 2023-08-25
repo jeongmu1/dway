@@ -1,6 +1,7 @@
 package com.dnlab.dway.auth.dto.request
 
 import com.dnlab.dway.auth.domain.Gender
+import com.dnlab.dway.common.annotation.validation.DateFormat
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Pattern
 import java.sql.Date
@@ -31,6 +32,7 @@ data class RegistrationRequestDto(
         val gender: Gender,
 
         @NotNull
+        @DateFormat
         val birthDay: Date,
 
         @Pattern(regexp = "^\\w+([.-]?\\w+)*@\\w+([.-]?\\w+)*(\\.\\w{2,3})+\$\n")
