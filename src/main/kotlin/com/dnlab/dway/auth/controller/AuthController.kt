@@ -5,8 +5,10 @@ import com.dnlab.dway.auth.dto.*
 import com.dnlab.dway.auth.dto.request.LoginRequestDto
 import com.dnlab.dway.auth.dto.request.RefreshTokenRequestDto
 import com.dnlab.dway.auth.dto.request.RegistrationRequestDto
+import com.dnlab.dway.auth.dto.request.TokenValidationRequestDto
 import com.dnlab.dway.auth.dto.response.LoginResponseDto
 import com.dnlab.dway.auth.dto.response.RegistrationResponseDto
+import com.dnlab.dway.auth.dto.response.TokenValidationResponseDto
 import com.dnlab.dway.auth.exception.InvalidTokenException
 import com.dnlab.dway.auth.service.AuthService
 import org.springframework.beans.factory.annotation.Value
@@ -61,5 +63,10 @@ class AuthController(
         } catch (e: InvalidTokenException) {
             throw ResponseStatusException(HttpStatus.UNAUTHORIZED, e.message)
         }
+    }
+
+    @PostMapping("/token-validation")
+    fun validateAccessToken(@RequestBody requestDto: TokenValidationRequestDto): ResponseEntity<TokenValidationResponseDto> {
+        return ResponseEntity.ok(authService.checkTokenValidation(requestDto))
     }
 }

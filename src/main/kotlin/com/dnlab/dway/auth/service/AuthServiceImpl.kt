@@ -8,8 +8,10 @@ import com.dnlab.dway.auth.domain.Token
 import com.dnlab.dway.auth.dto.request.LoginRequestDto
 import com.dnlab.dway.auth.dto.request.RefreshTokenRequestDto
 import com.dnlab.dway.auth.dto.request.RegistrationRequestDto
+import com.dnlab.dway.auth.dto.request.TokenValidationRequestDto
 import com.dnlab.dway.auth.dto.response.LoginResponseDto
 import com.dnlab.dway.auth.dto.response.RegistrationResponseDto
+import com.dnlab.dway.auth.dto.response.TokenValidationResponseDto
 import com.dnlab.dway.auth.exception.InvalidTokenException
 import com.dnlab.dway.auth.repository.AuthorityRepository
 import com.dnlab.dway.auth.repository.MemberRepository
@@ -74,7 +76,10 @@ class AuthServiceImpl(
             )
         )
 
-        return RegistrationResponseDto(username = member.username, name = "${member.korFirstName}${member.korLastName}")
+        return RegistrationResponseDto(
+            username = member.username,
+            name = "${member.korFirstName}${member.korLastName}"
+        )
     }
 
     @Transactional
@@ -93,28 +98,19 @@ class AuthServiceImpl(
         return LoginResponseDto(accessToken = accessToken, refreshToken = refreshToken)
     }
 
-    private fun createAuthentication(requestDto: LoginRequestDto): Authentication {
-        try {
-            val authenticationToken = UsernamePasswordAuthenticationToken(requestDto.username, requestDto.password)
-            val authentication = authenticationManagerBuilder.`object`.authenticate(authenticationToken)
-            SecurityContextHolder.getContext().authentication = authentication
-            return authentication
-        } catch (e: AuthenticationException) {
-            throw BadCredentialsException("아이디 또는 비밀번호가 잘못되었습니다.")
-        }
-    }
-
     override fun refreshToken(requestDto: RefreshTokenRequestDto): LoginResponseDto {
         val refreshToken = requestDto.refreshToken
         val prevTokenInfo =
-            tokenRepository.findTokenByToken(refreshToken) ?: throw InvalidTokenException("잘못되거나 만료된 토큰입니다.")
+            tokenRepository.findTokenByToken(refreshToken)
+                ?: throw InvalidTokenException("잘못되거나 만료된 토큰입니다.")
         tokenRepository.delete(prevTokenInfo)
 
         val newRefreshToken = tokenService.createRefreshToken()
         tokenRepository.save(Token(token = newRefreshToken, username = prevTokenInfo.username))
 
-        val grantedAuthorities = authorityRepository.findAuthoritiesByMemberUsername(prevTokenInfo.username)
-            .map { GrantedAuthority { it.role.toString() } }
+        val grantedAuthorities =
+            authorityRepository.findAuthoritiesByMemberUsername(prevTokenInfo.username)
+                .map { GrantedAuthority { it.role.toString() } }
 
         return LoginResponseDto(
             accessToken = tokenService.createAccessToken(
@@ -126,6 +122,23 @@ class AuthServiceImpl(
             ),
             refreshToken
         )
+    }
+
+    override fun checkTokenValidation(requestDto: TokenValidationRequestDto): TokenValidationResponseDto {
+        return TokenValidationResponseDto(tokenService.validateToken(requestDto.accessToken))
+    }
+
+    private fun createAuthentication(requestDto: LoginRequestDto): Authentication {
+        try {
+            val authenticationToken =
+                UsernamePasswordAuthenticationToken(requestDto.username, requestDto.password)
+            val authentication =
+                authenticationManagerBuilder.`object`.authenticate(authenticationToken)
+            SecurityContextHolder.getContext().authentication = authentication
+            return authentication
+        } catch (e: AuthenticationException) {
+            throw BadCredentialsException("아이디 또는 비밀번호가 잘못되었습니다.")
+        }
     }
 
     private fun findCountryById(id: String, countryOf: CountryOf): Country {

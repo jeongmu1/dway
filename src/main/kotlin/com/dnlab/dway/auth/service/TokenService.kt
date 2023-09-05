@@ -50,7 +50,8 @@ class TokenService(private val jwtProperties: JwtProperties) {
 
     fun getAuthentication(token: String): Authentication {
         val claims = getClaimsByToken(token)
-        val authorities = claims[authoritiesKey].toString().split(",").map { SimpleGrantedAuthority(it) }.toSet()
+        val authorities =
+            claims[authoritiesKey].toString().split(",").map { SimpleGrantedAuthority(it) }.toSet()
         val principal = User(claims.subject, "", authorities)
 
         return UsernamePasswordAuthenticationToken(principal, token, authorities)
@@ -71,9 +72,11 @@ class TokenService(private val jwtProperties: JwtProperties) {
         return null
     }
 
-    private fun getClaimsByToken(token: String): Claims = Jwts.parserBuilder()
-        .setSigningKey(key)
-        .build()
-        .parseClaimsJws(token)
-        .body
+    private fun getClaimsByToken(token: String): Claims {
+        return Jwts.parserBuilder()
+            .setSigningKey(key)
+            .build()
+            .parseClaimsJws(token)
+            .body
+    }
 }
