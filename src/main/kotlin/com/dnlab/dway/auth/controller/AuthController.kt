@@ -9,6 +9,7 @@ import com.dnlab.dway.auth.dto.request.TokenValidationRequestDto
 import com.dnlab.dway.auth.dto.response.LoginResponseDto
 import com.dnlab.dway.auth.dto.response.RegistrationResponseDto
 import com.dnlab.dway.auth.dto.response.TokenValidationResponseDto
+import com.dnlab.dway.auth.dto.response.UsernameDuplicationResponseDto
 import com.dnlab.dway.auth.exception.InvalidTokenException
 import com.dnlab.dway.auth.service.AuthService
 import org.springframework.beans.factory.annotation.Value
@@ -16,9 +17,11 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.AuthenticationException
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.server.ResponseStatusException
 import java.lang.IllegalArgumentException
@@ -54,6 +57,11 @@ class AuthController(
         } catch (e: AuthenticationException) {
             throw ResponseStatusException(HttpStatus.UNAUTHORIZED, e.message)
         }
+    }
+
+    @GetMapping("/check-duplication")
+    fun checkUsernameDuplication(@RequestParam username: String): ResponseEntity<UsernameDuplicationResponseDto> {
+        return ResponseEntity.ok(authService.checkUsernameDuplication(username))
     }
 
     @PostMapping("/reissue")

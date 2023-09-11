@@ -12,6 +12,7 @@ import com.dnlab.dway.auth.dto.request.TokenValidationRequestDto
 import com.dnlab.dway.auth.dto.response.LoginResponseDto
 import com.dnlab.dway.auth.dto.response.RegistrationResponseDto
 import com.dnlab.dway.auth.dto.response.TokenValidationResponseDto
+import com.dnlab.dway.auth.dto.response.UsernameDuplicationResponseDto
 import com.dnlab.dway.auth.exception.InvalidTokenException
 import com.dnlab.dway.auth.repository.AuthorityRepository
 import com.dnlab.dway.auth.repository.MemberRepository
@@ -96,6 +97,11 @@ class AuthServiceImpl(
         tokenRepository.save(newToken)
 
         return LoginResponseDto(accessToken = accessToken, refreshToken = refreshToken)
+    }
+
+    override fun checkUsernameDuplication(username: String): UsernameDuplicationResponseDto {
+        return UsernameDuplicationResponseDto(username = username,
+            duplicated = memberRepository.existsMemberByUsername(username))
     }
 
     override fun refreshToken(requestDto: RefreshTokenRequestDto): LoginResponseDto {
