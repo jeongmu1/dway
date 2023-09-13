@@ -17,7 +17,7 @@ class CorsFilterConfig(
         return CorsFilter(UrlBasedCorsConfigurationSource().apply {
             registerCorsConfiguration("/**", CorsConfiguration().apply {
                 allowCredentials = true
-                addAllowedOrigin(clientOrigin)
+                addAllowedOrigin("*")
                 addAllowedHeader("*")
                 addAllowedMethod("*")
             })
