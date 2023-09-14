@@ -2,6 +2,7 @@ package com.dnlab.dway.auth.dto.request
 
 import com.dnlab.dway.auth.domain.Gender
 import com.dnlab.dway.common.annotation.validation.DateFormat
+import com.dnlab.dway.common.annotation.validation.NoWhitespace
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Pattern
 import java.sql.Date
@@ -9,6 +10,7 @@ import java.sql.Date
 
 data class RegistrationRequestDto(
         @Pattern(regexp = "^[A-Za-z0-9]{6,20}\$")
+        @NoWhitespace
         val username: String,
 
         @Pattern(regexp = "^(?!([A-Za-z]+|[~!@#$%^&*()_+=]+|[0-9]+)\$)[A-Za-z\\d~!@#\$%^&*()_+=]{10,}\$")
@@ -17,15 +19,19 @@ data class RegistrationRequestDto(
         val passwordConfirm: String,
 
         @Pattern(regexp = "^[가-힣]{1,2}\$")
+        @NoWhitespace
         val korFirstName: String,
 
         @Pattern(regexp = "^[가-힣]{1,10}\$")
+        @NoWhitespace
         val korLastName: String,
 
         @Pattern(regexp = "^[A-Z]{2,20}\$")
+        @NoWhitespace
         val engFirstName: String,
 
         @Pattern(regexp = "^[A-Z]{2,20}\$")
+        @NoWhitespace
         val engLastName: String,
 
         @NotNull
@@ -35,13 +41,13 @@ data class RegistrationRequestDto(
         @DateFormat
         val birthDay: Date,
 
-        @Pattern(regexp = "^\\w+([.-]?\\w+)*@\\w+([.-]?\\w+)*(\\.\\w{2,3})+\$\n")
+        @Pattern(regexp = "^\\w+([.-]?\\w+)*@\\w+([.-]?\\w+)*(\\.\\w{2,3})+\$")
         val email: String,
 
         @Pattern(regexp = "^[A-Z]{2}\$")
         val phoneCountry: String,
 
-        @Pattern(regexp = "^\\d{3}-\\d{3,4}-\\d{3,4}\$\n")
+        @Pattern(regexp = "^(\\d{2,3})-?\\d{3,4}-\\d{4}\$")
         val phone: String,
 
         @Pattern(regexp = "^[A-Z]{2}\$")
