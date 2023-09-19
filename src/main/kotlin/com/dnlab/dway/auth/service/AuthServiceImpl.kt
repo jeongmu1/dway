@@ -134,6 +134,11 @@ class AuthServiceImpl(
         return TokenValidationResponseDto(tokenService.validateToken(requestDto.accessToken))
     }
 
+    override fun processLogout(username: String): Boolean {
+        val deletedTokens = tokenRepository.deleteAllByUsername(username)
+        return deletedTokens.isNotEmpty()
+    }
+
     private fun createAuthentication(requestDto: LoginRequestDto): Authentication {
         try {
             val authenticationToken =

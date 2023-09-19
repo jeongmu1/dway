@@ -17,6 +17,7 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.AuthenticationException
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.server.ResponseStatusException
 import java.lang.IllegalArgumentException
+import java.security.Principal
 import java.util.NoSuchElementException
 
 @RestController
@@ -76,5 +78,11 @@ class AuthController(
     @PostMapping("/token-validation")
     fun validateAccessToken(@RequestBody requestDto: TokenValidationRequestDto): ResponseEntity<TokenValidationResponseDto> {
         return ResponseEntity.ok(authService.checkTokenValidation(requestDto))
+    }
+
+    @DeleteMapping("/logout")
+    fun processLogout(principal: Principal): ResponseEntity<Unit> {
+        return if (authService.processLogout(principal.name)) ResponseEntity.ok()
+            .build() else ResponseEntity.noContent().build()
     }
 }
