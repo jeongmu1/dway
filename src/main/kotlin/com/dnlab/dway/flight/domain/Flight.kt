@@ -7,42 +7,48 @@ import java.sql.Timestamp
 
 @Entity
 class Flight(
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id: Long = 0L,
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long = 0L,
 
-        @Column(length = 10)
-        val code: String,
+    @Column(length = 10)
+    val code: String,
 
-        @ManyToOne(fetch = FetchType.EAGER)
-        val aircraft: Aircraft,
+    @ManyToOne(fetch = FetchType.EAGER)
+    val aircraft: Aircraft,
 
-        @ManyToOne(fetch = FetchType.LAZY)
-        val departureAirport: Airport,
+    @ManyToOne(fetch = FetchType.LAZY)
+    val departureAirport: Airport,
 
-        @ManyToOne(fetch = FetchType.LAZY)
-        val arrivalAirport: Airport,
+    @ManyToOne(fetch = FetchType.LAZY)
+    val arrivalAirport: Airport,
 
-        val departureTime: Timestamp,
+    val departureTime: Timestamp,
 
-        val arrivalTime: Timestamp,
+    val arrivalTime: Timestamp,
 
-        @OneToMany(mappedBy = "flight", fetch = FetchType.LAZY)
-        val flightSeats: MutableList<FlightSeats> = ArrayList(),
+    var enabled: Boolean = true,
 
-        @CreatedDate
-        var createdDate: Timestamp? = null,
+    @OneToMany(mappedBy = "flight", fetch = FetchType.LAZY)
+    val flightSeats: MutableList<FlightSeats> = ArrayList(),
+
+    @CreatedDate
+    var createdDate: Timestamp? = null,
 ) {
-        override fun equals(other: Any?): Boolean {
-                if (this === other) return true
-                if (javaClass != other?.javaClass) return false
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
 
-                other as Flight
+        other as Flight
 
-                return id == other.id
-        }
+        return id == other.id
+    }
 
-        override fun hashCode(): Int {
-                return id.hashCode()
-        }
+    override fun hashCode(): Int {
+        return id.hashCode()
+    }
+
+    override fun toString(): String {
+        return "Flight(id=$id, code='$code', departureTime=$departureTime, arrivalTime=$arrivalTime, enabled=$enabled, createdDate=$createdDate)"
+    }
 }
