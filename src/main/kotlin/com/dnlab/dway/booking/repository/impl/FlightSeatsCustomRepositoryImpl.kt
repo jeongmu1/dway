@@ -53,6 +53,10 @@ class FlightSeatsCustomRepositoryImpl(
         val qFlightSeats = QFlightSeats.flightSeats
         val qTicket = QTicket.ticket
 
+        val minFareSubQuery = JPAExpressions.select(qFlightSeats.fare.min())
+            .from(qFlightSeats)
+            .where(qFlightSeats.flight.eq(qFlight))
+
         val result = jpaQueryFactory
             .select(
                 Projections.constructor(
@@ -77,22 +81,13 @@ class FlightSeatsCustomRepositoryImpl(
                             )
                             .exists()
                     ).`as`("businessOperate"),
-                    ExpressionUtils.`as`(
-                        JPAExpressions.select(qFlightSeats.fare.min())
-                            .from(qFlightSeats)
-                            .where(qFlightSeats.flight.eq(qFlight)),
-                        "fareAmt"
-                    ),
+                    ExpressionUtils.`as`(minFareSubQuery, "fareAmt"),
                     ExpressionUtils.`as`(
                         JPAExpressions.select(qFlightSeats.fareGrade)
                             .from(qFlightSeats)
                             .where(
                                 qFlightSeats.flight.eq(qFlight),
-                                qFlightSeats.fare.eq(
-                                    JPAExpressions.select(qFlightSeats.fare.min())
-                                        .from(qFlightSeats)
-                                        .where(qFlightSeats.flight.eq(qFlight))
-                                )
+                                qFlightSeats.fare.eq(minFareSubQuery)
                             ),
                         "fareType"
                     )
