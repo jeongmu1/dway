@@ -21,8 +21,9 @@ class FlightSeats(
     val tickets: MutableList<Ticket> = ArrayList(),
 
     val inflightMeal: Int = 0,
-    val checkedBaggageWeight: Int = 10,
-    val carryOnBaggageWeight: Int = 0,
+    val checkedBaggageWeight: Int = 15,
+    val checkedBaggageCount: Int = 1,
+    val carryOnBaggageWeight: Int = 10,
     val carryOnBaggageCount: Int = 0,
     val fare: Int,
     val maxPassengers: Int,
