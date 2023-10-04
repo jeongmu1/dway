@@ -7,9 +7,9 @@ data class SimpleFlightSeatInfo(
     val fareGrade: FareGrade,
     val seatGrade: SeatGrade,
     val fare: Int,
-    val inflightMeal: Int,
-    val checkedBaggageWeight: Int,
-    val carryOnBaggageWeight: Int,
-    val carryOnBaggageCount: Int,
+    val inflightMeal: Short?,
+    val checkedBaggageWeight: Short?,
+    val carryOnBaggageWeight: Short?,
+    val carryOnBaggageCount: Short?,
     val remainingSeats: Int
 )
