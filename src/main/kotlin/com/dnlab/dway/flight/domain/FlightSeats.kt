@@ -20,16 +20,19 @@ class FlightSeats(
     @OneToMany(mappedBy = "seats", fetch = FetchType.LAZY)
     val tickets: MutableList<Ticket> = ArrayList(),
 
-    val inflightMeal: Int = 0,
-    val checkedBaggageWeight: Int = 15,
-    val checkedBaggageCount: Int = 1,
-    val carryOnBaggageWeight: Int = 10,
-    val carryOnBaggageCount: Int = 0,
+    val inflightMeal: Short? = null, // 기내식
+
+    // 수하물 관련
+    val checkedBaggageWeight: Short? = null,
+    val checkedBaggageCount: Short? = null,
+    val carryOnBaggageWeight: Short? = null,
+    val carryOnBaggageCount: Short? = null,
+
     val fare: Int,
     val maxPassengers: Int,
     val currentPassengers: Int = maxPassengers,
 
-) {
+    ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
