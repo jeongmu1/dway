@@ -69,7 +69,7 @@ class FlightSeatsCustomRepositoryImpl(
                         qFlightSeats.maxPassengers.subtract(
                             JPAExpressions.select(qTicket.passengerCount.sum())
                                 .from(qTicket)
-                                .where(qTicket.seats.eq(qFlightSeats))
+                                .where(qTicket.flightSeats.eq(qFlightSeats))
                         ).goe(1)
                     ).`as`("soldOut"),
                     Expressions.asBoolean(

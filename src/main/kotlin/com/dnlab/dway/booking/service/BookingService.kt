@@ -7,6 +7,5 @@ import com.dnlab.dway.booking.dto.response.LowestFaresResponseDto
 
 interface BookingService {
     fun findFlightSeatInfos(requestDto: ItineraryInfoRequestDto): ItineraryInfoResponseDto
-
     fun getLowestFareInfoList(requestDto: LowestFareRequestDto): LowestFaresResponseDto
 }

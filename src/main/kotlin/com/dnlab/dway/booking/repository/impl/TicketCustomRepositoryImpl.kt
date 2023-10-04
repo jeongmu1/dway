@@ -14,7 +14,7 @@ class TicketCustomRepositoryImpl(
         val maxPassengers = flightSeats.maxPassengers
         val reservedSeats = jpaQueryFactory.select(qTicket.passengerCount.sum())
             .from(qTicket)
-            .where(qTicket.seats.eq(flightSeats))
+            .where(qTicket.flightSeats.eq(flightSeats))
             .fetch().firstOrNull() ?: 0
         return maxPassengers - reservedSeats
     }

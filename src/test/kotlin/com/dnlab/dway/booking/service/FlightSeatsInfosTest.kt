@@ -4,6 +4,7 @@ import com.dnlab.dway.booking.dto.request.DeptArriAirportCode
 import com.dnlab.dway.booking.dto.request.ItineraryInfoRequestDto
 import com.dnlab.dway.flight.domain.*
 import com.dnlab.dway.flight.repository.FlightRepository
+import com.dnlab.dway.flight.repository.FlightSeatsRepository
 import com.dnlab.dway.flight.repository.TicketRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -22,7 +23,7 @@ import java.time.LocalDate
 
 @ExtendWith(SpringExtension::class)
 @SpringBootTest
-class BookingServiceImplTest {
+class FlightSeatsInfosTest {
 
     @InjectMocks
     private lateinit var bookingService: BookingServiceImpl
@@ -32,6 +33,9 @@ class BookingServiceImplTest {
 
     @Mock
     private lateinit var ticketRepository: TicketRepository
+
+    @Mock
+    private lateinit var flightSeatsRepository: FlightSeatsRepository
 
     @Test
     fun findFlightSeatInfos_Success() {
@@ -53,7 +57,7 @@ class BookingServiceImplTest {
         whenever(flight.code).thenReturn("TW000")
         whenever(flight.aircraft).thenReturn(aircraft)
         whenever(flightSeats.fareGrade).thenReturn(FareGrade.NORMAL)
-        whenever(flightSeats.grade).thenReturn(SeatGrade.ECONOMY)
+        whenever(flightSeats.seatGrade).thenReturn(SeatGrade.ECONOMY)
         whenever(flightRepository.findFlightInfosBy(any(), any(), any())).thenReturn(listOf(flight))
         whenever(flight.flightSeats).thenReturn(mutableListOf(flightSeats))
         whenever(ticketRepository.countAvailableSeatsByFlightSeats(any())).thenReturn(10)
@@ -86,4 +90,6 @@ class BookingServiceImplTest {
             )
         }
     }
+
+
 }

@@ -13,7 +13,7 @@ class Ticket(
         val member: Member,
 
         @ManyToOne(fetch = FetchType.LAZY)
-        val seats: FlightSeats,
+        val flightSeats: FlightSeats,
 
         @ManyToOne(fetch = FetchType.LAZY)
         val flight: Flight,

@@ -77,7 +77,7 @@ class BookingServiceImpl(
     private fun FlightSeats.toSimpleFlightSeatInfo(): SimpleFlightSeatInfo {
         return SimpleFlightSeatInfo(
             fareGrade = fareGrade,
-            seatGrade = grade,
+            seatGrade = seatGrade,
             fare = fare,
             inflightMeal = inflightMeal,
             checkedBaggageWeight = checkedBaggageWeight,

@@ -1,5 +1,10 @@
 package com.dnlab.dway.flight.service
 
+import com.dnlab.dway.flight.dto.request.FlightOfDayRequestDto
+import com.dnlab.dway.flight.dto.response.FlightInfo
+import com.dnlab.dway.flight.dto.response.FlightSeatInfo
+import com.dnlab.dway.common.util.getEndTimestamp
+import com.dnlab.dway.common.util.getStartTimestamp
 import com.dnlab.dway.flight.domain.Flight
 import com.dnlab.dway.flight.domain.FlightSeats
 import com.dnlab.dway.flight.dto.request.NewFlightRequestDto
@@ -9,6 +14,7 @@ import com.dnlab.dway.flight.repository.AircraftRepository
 import com.dnlab.dway.flight.repository.AirportRepository
 import com.dnlab.dway.flight.repository.FlightRepository
 import com.dnlab.dway.flight.repository.FlightSeatsRepository
+import com.dnlab.dway.flight.util.FlightSpecification
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -46,7 +52,7 @@ class FlightServiceImpl(
                 fareGrade = it.fareGrade,
                 maxPassengers = it.maxPassengers,
                 flight = flight,
-                grade = it.grade,
+                seatGrade = it.grade,
                 fare = it.fare,
                 inflightMeal = it.inflightMeal,
                 checkedBaggageWeight = it.checkedBaggageWeight,
@@ -65,6 +71,19 @@ class FlightServiceImpl(
         )
     }
 
+    @Transactional(readOnly = true)
+    override fun findFlightInfoOfDay(requestDto: FlightOfDayRequestDto): List<FlightInfo> {
+        val flights = flightRepository.findAll(
+            FlightSpecification.hasDepartureTimeBetween(
+                start = requestDto.flightDate.getStartTimestamp(),
+                end = requestDto.flightDate.getEndTimestamp()
+            ).and(FlightSpecification.hasDepartureAirportId(requestDto.deptAirportId))
+                .and(FlightSpecification.hasArrivalAirportId(requestDto.arriAirportId))
+        )
+
+        return flights.map { it.toFlightInfo() }
+    }
+
     private fun requireNoDuplicatedFareGrade(newFlightSeatsRequestDtoList: List<NewFlightSeatsRequestDto>) {
         require(newFlightSeatsRequestDtoList.groupBy { it.fareGrade }
             .none { it.value.size > 1 }) { "중복된 FareGrade 가 존재합니다." }
@@ -72,10 +91,41 @@ class FlightServiceImpl(
 
     private fun requireNoDuplicatedFare(newFlightSeatsRequestDtoList: List<NewFlightSeatsRequestDto>) {
         require(newFlightSeatsRequestDtoList.groupBy { it.fare }
-            .none { it.value.size > 1}) { "다른 FareGrade 의 Fare 중 중복된 Fare 값이 있습니다." }
+            .none { it.value.size > 1 }) { "다른 FareGrade 의 Fare 중 중복된 Fare 값이 있습니다." }
     }
 
     private fun findAirportById(id: String) =
         airportRepository.findAirportById(id)
             ?: throw NoSuchElementException("해당 공항을 찾을 수 없습니다: $id")
+
+    private fun Flight.toFlightInfo(): FlightInfo {
+        val flightSeatInfoList = flightSeats.map { it.toFlightSeatInfo() }
+        val deptAirportId = departureAirport.id
+        val arriAirportId = arrivalAirport.id
+        val aircraft = aircraft.model
+
+        return FlightInfo(
+            flightCode = code,
+            aircraft = aircraft,
+            deptAirport = deptAirportId,
+            arriAirport = arriAirportId,
+            deptTime = departureTime,
+            arriTime = arrivalTime,
+            flightSeatInfoList = flightSeatInfoList
+        )
+    }
+
+    private fun FlightSeats.toFlightSeatInfo(): FlightSeatInfo {
+        val remainingSeats = maxPassengers - tickets.sumOf { it.passengerCount }
+        return FlightSeatInfo(
+            fareGrade = fareGrade,
+            seatGrade = seatGrade,
+            checkedBaggageWeight = checkedBaggageWeight,
+            checkedBaggageCount = checkedBaggageCount,
+            carryOnBaggageWeight = carryOnBaggageWeight,
+            carryOnBaggageCount = carryOnBaggageCount,
+            inflightMeal = inflightMeal,
+            remainingSeats = remainingSeats
+        )
+    }
 }

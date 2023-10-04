@@ -12,12 +12,12 @@ class FlightSeats(
     val flight: Flight,
 
     @Enumerated(EnumType.STRING)
-    val grade: SeatGrade,
+    val seatGrade: SeatGrade,
 
     @Enumerated(EnumType.STRING)
     val fareGrade: FareGrade,
 
-    @OneToMany(mappedBy = "seats", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "flightSeats", fetch = FetchType.LAZY)
     val tickets: MutableList<Ticket> = ArrayList(),
 
     val inflightMeal: Short, // 기내식

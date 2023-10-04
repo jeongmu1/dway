@@ -88,12 +88,13 @@ internal class FlightSeatsCustomRepositoryTest {
                 carryOnBaggageCount = 0,
                 carryOnBaggageWeight = 0,
                 checkedBaggageWeight = 0,
+                checkedBaggageCount = 0,
                 fare = 15,
                 inflightMeal = 0,
                 maxPassengers = 100,
                 flight = flight,
                 fareGrade = FareGrade.SMART,
-                grade = SeatGrade.ECONOMY
+                seatGrade = SeatGrade.ECONOMY
             )
         )
     }
@@ -103,12 +104,13 @@ internal class FlightSeatsCustomRepositoryTest {
             carryOnBaggageCount = 0,
             carryOnBaggageWeight = 0,
             checkedBaggageWeight = 0,
+            checkedBaggageCount = 0,
             fare = 10,
             inflightMeal = 0,
             maxPassengers = 100,
             flight = flight,
             fareGrade = FareGrade.EVENT,
-            grade = SeatGrade.ECONOMY
+            seatGrade = SeatGrade.ECONOMY
         )
     }
 
