@@ -18,8 +18,10 @@ data class NewFlightSeatsRequestDto(
     val inflightMeal: Short = 0,
     @Min(0, message = "위탁 수하물 무게는 0 이상이여야 합니다.")
     val checkedBaggageWeight: Short = 10,
+    @Min(0, message = "위탁 수하물 개수는 0 이상이여야 합니다.")
+    val checkedBaggageCount: Short = 0,
     @Min(0, message = "기내 수하물 무게는 0 이상이여야 합니다.")
     val carryOnBaggageWeight: Short = 0,
     @Min(0, message = "기내 수하물 개수는 0 이상이여야 합니다.")
-    val carryOnBaggageCount: Short = 0,
+    val carryOnBaggageCount: Short = 0
 )

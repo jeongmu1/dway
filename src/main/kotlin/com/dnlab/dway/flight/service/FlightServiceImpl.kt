@@ -50,8 +50,9 @@ class FlightServiceImpl(
                 fare = it.fare,
                 inflightMeal = it.inflightMeal,
                 checkedBaggageWeight = it.checkedBaggageWeight,
+                checkedBaggageCount = it.checkedBaggageCount,
                 carryOnBaggageCount = it.carryOnBaggageCount,
-                carryOnBaggageWeight = it.carryOnBaggageWeight
+                carryOnBaggageWeight = it.carryOnBaggageWeight,
             )
         })
 

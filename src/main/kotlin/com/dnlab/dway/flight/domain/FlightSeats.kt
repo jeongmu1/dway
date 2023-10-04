@@ -20,13 +20,13 @@ class FlightSeats(
     @OneToMany(mappedBy = "seats", fetch = FetchType.LAZY)
     val tickets: MutableList<Ticket> = ArrayList(),
 
-    val inflightMeal: Short? = null, // 기내식
+    val inflightMeal: Short, // 기내식
 
     // 수하물 관련
-    val checkedBaggageWeight: Short? = null,
-    val checkedBaggageCount: Short? = null,
-    val carryOnBaggageWeight: Short? = null,
-    val carryOnBaggageCount: Short? = null,
+    val checkedBaggageWeight: Short,
+    val checkedBaggageCount: Short,
+    val carryOnBaggageWeight: Short,
+    val carryOnBaggageCount: Short,
 
     val fare: Int,
     val maxPassengers: Int,
