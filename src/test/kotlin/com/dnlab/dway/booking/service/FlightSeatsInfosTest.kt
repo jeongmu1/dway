@@ -4,7 +4,6 @@ import com.dnlab.dway.booking.dto.request.DeptArriAirportCode
 import com.dnlab.dway.booking.dto.request.ItineraryInfoRequestDto
 import com.dnlab.dway.flight.domain.*
 import com.dnlab.dway.flight.repository.FlightRepository
-import com.dnlab.dway.flight.repository.FlightSeatsRepository
 import com.dnlab.dway.flight.repository.TicketRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -33,9 +32,6 @@ class FlightSeatsInfosTest {
 
     @Mock
     private lateinit var ticketRepository: TicketRepository
-
-    @Mock
-    private lateinit var flightSeatsRepository: FlightSeatsRepository
 
     @Test
     fun findFlightSeatInfos_Success() {
