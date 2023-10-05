@@ -1,5 +1,6 @@
 package com.dnlab.dway.common.domain
 
+import jakarta.persistence.Column
 import jakarta.persistence.EntityListeners
 import jakarta.persistence.MappedSuperclass
 import org.springframework.data.annotation.CreatedDate
@@ -11,10 +12,12 @@ import java.time.LocalDateTime
 @EntityListeners(AuditingEntityListener::class)
 open class BaseTimeEntity {
     @CreatedDate
+    @Column(nullable = false)
     var createdAt: LocalDateTime = LocalDateTime.now()
         private set
 
     @LastModifiedBy
+    @Column(nullable = false)
     var updatedAt: LocalDateTime = LocalDateTime.now()
         private set
 }
