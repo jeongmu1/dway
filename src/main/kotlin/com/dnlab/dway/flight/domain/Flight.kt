@@ -11,28 +11,32 @@ class Flight(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0L,
 
-    @Column(length = 10)
+    @Column(length = 10, nullable = false)
     val code: String,
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     val aircraft: Aircraft,
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     val departureAirport: Airport,
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     val arrivalAirport: Airport,
 
+    @Column(nullable = false)
     val departureTime: Timestamp,
 
+    @Column(nullable = false)
     val arrivalTime: Timestamp,
 
+    @Column(nullable = false)
     var enabled: Boolean = true,
 
     @OneToMany(mappedBy = "flight", fetch = FetchType.LAZY)
     val flightSeats: MutableList<FlightSeats> = ArrayList(),
 
     @CreatedDate
+    @Column(nullable = false)
     var createdDate: Timestamp? = null,
 ) {
     override fun equals(other: Any?): Boolean {

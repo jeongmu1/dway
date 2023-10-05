@@ -7,8 +7,10 @@ class Aircraft(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long = 0L,
+        @Column(unique = true, nullable = false)
         val model: String,
         @Enumerated(EnumType.STRING)
+        @Column(nullable = false)
         val manufacture: Manufacture
 ) {
         override fun equals(other: Any?): Boolean {

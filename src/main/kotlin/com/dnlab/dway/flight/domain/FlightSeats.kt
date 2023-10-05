@@ -8,30 +8,37 @@ class FlightSeats(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0L,
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     val flight: Flight,
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     val seatGrade: SeatGrade,
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     val fareGrade: FareGrade,
 
     @OneToMany(mappedBy = "flightSeats", fetch = FetchType.LAZY)
     val tickets: MutableList<Ticket> = ArrayList(),
 
+    @Column(nullable = false)
     val inflightMeal: Short, // 기내식
 
     // 수하물 관련
+    @Column(nullable = false)
     val checkedBaggageWeight: Short,
+    @Column(nullable = false)
     val checkedBaggageCount: Short,
+    @Column(nullable = false)
     val carryOnBaggageWeight: Short,
+    @Column(nullable = false)
     val carryOnBaggageCount: Short,
 
+    @Column(nullable = false)
     val fare: Int,
+    @Column(nullable = false)
     val maxPassengers: Int,
-    val currentPassengers: Int = maxPassengers,
-
     ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

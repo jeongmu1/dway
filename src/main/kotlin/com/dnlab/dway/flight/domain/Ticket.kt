@@ -9,15 +9,16 @@ class Ticket(
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long,
 
-        @ManyToOne(fetch = FetchType.LAZY)
+        @ManyToOne(fetch = FetchType.LAZY, optional = false)
         val member: Member,
 
-        @ManyToOne(fetch = FetchType.LAZY)
+        @ManyToOne(fetch = FetchType.LAZY, optional = false)
         val flightSeats: FlightSeats,
 
-        @ManyToOne(fetch = FetchType.LAZY)
+        @ManyToOne(fetch = FetchType.LAZY, optional = false)
         val flight: Flight,
 
+        @Column(nullable = false)
         val passengerCount: Int
 ) {
         override fun equals(other: Any?): Boolean {

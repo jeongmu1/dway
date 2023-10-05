@@ -13,42 +13,44 @@ class Member(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0L,
 
-    @Column(length = 20, unique = true)
+    @Column(length = 20, unique = true, nullable = false)
     val username: String,
 
-    @Column(length = 60)
+    @Column(length = 60, nullable = false)
     var password: String,
 
-    @Column(length = 2)
+    @Column(length = 2, nullable = false)
     var korFirstName: String,
 
-    @Column(length = 10)
+    @Column(length = 10, nullable = false)
     var korLastName: String,
 
-    @Column(length = 20)
+    @Column(length = 20, nullable = false)
     var engFirstName: String,
 
-    @Column(length = 20)
+    @Column(length = 20, nullable = false)
     var engLastName: String,
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 10)
+    @Column(length = 10, nullable = false)
     val gender: Gender,
 
+    @Column(nullable = false)
     val birthDay: Date,
 
-    @Column(length = 60)
+    @Column(length = 60, nullable = false)
     var email: String,
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     var phoneCountry: Country,
 
-    @Column(length = 13)
+    @Column(length = 13, nullable = false)
     val phoneNumber: String,
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     var country: Country,
 
+    @Column(nullable = false)
     var enabled: Boolean = true,
 ): BaseTimeEntity() {
     override fun equals(other: Any?): Boolean {

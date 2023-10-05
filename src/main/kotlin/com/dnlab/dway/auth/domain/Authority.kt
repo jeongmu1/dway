@@ -8,10 +8,11 @@ class Authority(
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long = 0L,
 
-        @ManyToOne(fetch = FetchType.EAGER)
+        @ManyToOne(fetch = FetchType.EAGER, optional = false)
         val member: Member,
 
         @Enumerated(EnumType.STRING)
+        @Column(nullable = false)
         val role: Role
 ) {
     override fun equals(other: Any?): Boolean {

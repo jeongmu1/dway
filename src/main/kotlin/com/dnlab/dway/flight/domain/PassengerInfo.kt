@@ -11,20 +11,28 @@ class PassengerInfo(
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long,
 
-        @ManyToOne(fetch = FetchType.LAZY)
+        @ManyToOne(fetch = FetchType.LAZY, optional = false)
         val ticket: Ticket,
 
-        @ManyToOne(fetch = FetchType.LAZY)
+        @ManyToOne(fetch = FetchType.LAZY, optional = false)
         val country: Country,
 
-        @Column(length = 45)
+        @Column(length = 45, nullable = false)
         val firstName: String,
 
-        @Column(length = 45)
+        @Column(length = 45, nullable = false)
         val lastName: String,
 
+        @Column(nullable = false)
         val gender: Gender,
 
+        @Column(length = 9, nullable = false)
+        val passportNumber: String,
+
+        @Column(nullable = false)
+        val passportExpiration: String,
+
+        @Column(nullable = false)
         val birthDay: Date
 ) {
     override fun equals(other: Any?): Boolean {
