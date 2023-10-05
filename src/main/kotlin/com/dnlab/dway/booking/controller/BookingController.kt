@@ -2,9 +2,7 @@ package com.dnlab.dway.booking.controller
 
 import com.dnlab.dway.booking.dto.request.ItineraryInfoRequestDto
 import com.dnlab.dway.booking.dto.response.ItineraryInfoResponseDto
-import com.dnlab.dway.booking.dto.response.LowestFaresResponseDto
 import com.dnlab.dway.booking.service.BookingService
-import com.dnlab.dway.booking.dto.request.LowestFareRequestDto
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -26,10 +24,5 @@ class BookingController(
         } catch (e: IllegalArgumentException) {
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, e.message)
         }
-    }
-
-    @GetMapping("/lowest-fares")
-    fun getLowestFares(requestDto: LowestFareRequestDto): ResponseEntity<LowestFaresResponseDto> {
-        return ResponseEntity.ok(bookingService.getLowestFareInfoList(requestDto))
     }
 }

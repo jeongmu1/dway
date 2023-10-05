@@ -4,10 +4,7 @@ import com.dnlab.dway.flight.domain.Aircraft
 import com.dnlab.dway.flight.domain.Flight
 import com.dnlab.dway.flight.domain.Manufacture
 import com.dnlab.dway.flight.dto.request.NewFlightRequestDto
-import com.dnlab.dway.flight.repository.AircraftRepository
-import com.dnlab.dway.flight.repository.AirportRepository
-import com.dnlab.dway.flight.repository.FlightRepository
-import com.dnlab.dway.flight.repository.FlightSeatsRepository
+import com.dnlab.dway.flight.repository.*
 import com.dnlab.dway.region.domain.Airport
 import com.dnlab.dway.region.domain.Country
 import com.dnlab.dway.region.domain.RegionCategory
@@ -33,6 +30,9 @@ internal class AddingFlightTest {
 
     @Mock
     private lateinit var airportRepository: AirportRepository
+
+    @Mock
+    private lateinit var ticketRepository: TicketRepository
 
     @InjectMocks
     private lateinit var flightService: FlightServiceImpl

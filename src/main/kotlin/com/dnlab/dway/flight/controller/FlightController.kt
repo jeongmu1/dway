@@ -1,5 +1,7 @@
 package com.dnlab.dway.flight.controller
 
+import com.dnlab.dway.booking.dto.request.LowestFareRequestDto
+import com.dnlab.dway.booking.dto.response.LowestFaresResponseDto
 import com.dnlab.dway.flight.dto.request.FlightOfDayRequestDto
 import com.dnlab.dway.flight.dto.request.NewFlightRequestDto
 import com.dnlab.dway.flight.dto.response.FlightInfo
@@ -31,5 +33,10 @@ class FlightController(
     @GetMapping("/daily-flight")
     fun getFlightOfDay(requestDto: FlightOfDayRequestDto): ResponseEntity<List<FlightInfo>> {
         return ResponseEntity.ok(flightService.findFlightInfoOfDay(requestDto))
+    }
+
+    @GetMapping("/lowest-fares")
+    fun getLowestFares(requestDto: LowestFareRequestDto): ResponseEntity<LowestFaresResponseDto> {
+        return ResponseEntity.ok(flightService.getLowestFareInfoListOfWeek(requestDto))
     }
 }
