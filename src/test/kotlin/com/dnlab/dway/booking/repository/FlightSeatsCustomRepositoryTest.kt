@@ -73,7 +73,6 @@ internal class FlightSeatsCustomRepositoryTest {
             enabled = true,
             aircraft = aircraft,
             arrivalTime = Timestamp(System.currentTimeMillis() + 50000),
-            createdDate = Timestamp(System.currentTimeMillis()),
             departureTime = Timestamp(System.currentTimeMillis()),
             code = "TW000",
             departureAirport = deptAirport,

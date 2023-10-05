@@ -74,7 +74,6 @@ internal class AddingFlightTest {
         code = "DW100",
         arrivalAirport = airport1,
         departureAirport = airport2,
-        createdDate = Timestamp(System.currentTimeMillis()),
         departureTime = Timestamp(System.currentTimeMillis()),
         arrivalTime = Timestamp(System.currentTimeMillis()),
         aircraft = aircraft
