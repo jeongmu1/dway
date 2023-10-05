@@ -4,7 +4,7 @@ import com.dnlab.dway.common.domain.BaseTimeEntity
 import com.dnlab.dway.region.domain.Country
 import jakarta.persistence.*
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
-import java.sql.Date
+import java.time.LocalDate
 
 @Entity
 @EntityListeners(AuditingEntityListener::class)
@@ -36,7 +36,7 @@ class Member(
     val gender: Gender,
 
     @Column(nullable = false)
-    val birthDay: Date,
+    val birthDay: LocalDate,
 
     @Column(length = 60, nullable = false)
     var email: String,

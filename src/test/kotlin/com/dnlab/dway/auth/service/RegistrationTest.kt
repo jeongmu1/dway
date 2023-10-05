@@ -20,8 +20,7 @@ import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations.openMocks
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.crypto.password.PasswordEncoder
-import java.util.*
-import java.sql.Date
+import java.time.LocalDate
 import kotlin.NoSuchElementException
 
 internal class RegistrationTest {
@@ -113,7 +112,7 @@ internal class RegistrationTest {
             engFirstName = "TE",
             engLastName = "ST",
             gender = Gender.MALE,
-            birthDay = Date(Calendar.getInstance().timeInMillis),
+            birthDay = LocalDate.now(),
             email = "test@test.com",
             phoneCountry = country,
             phoneNumber = "010-0000-1111",
@@ -137,7 +136,7 @@ internal class RegistrationTest {
         engFirstName = "TE",
         engLastName = "ST",
         gender = Gender.MALE,
-        birthDay = Date(Calendar.getInstance().timeInMillis),
+        birthDay = LocalDate.now(),
         email = "test@test.com",
         phoneCountry = "KR",
         phone = "010-0000-1111",

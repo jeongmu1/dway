@@ -5,7 +5,7 @@ import com.dnlab.dway.common.annotation.validation.DateFormat
 import com.dnlab.dway.common.annotation.validation.NoWhitespace
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Pattern
-import java.sql.Date
+import java.time.LocalDate
 
 
 data class RegistrationRequestDto(
@@ -39,7 +39,7 @@ data class RegistrationRequestDto(
 
         @NotNull
         @DateFormat
-        val birthDay: Date,
+        val birthDay: LocalDate,
 
         @Pattern(regexp = "^\\w+([.-]?\\w+)*@\\w+([.-]?\\w+)*(\\.\\w{2,3})+\$")
         val email: String,

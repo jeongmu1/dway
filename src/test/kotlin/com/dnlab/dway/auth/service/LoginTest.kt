@@ -18,8 +18,7 @@ import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.transaction.annotation.Transactional
-import java.sql.Date
-import java.util.*
+import java.time.LocalDate
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -56,7 +55,7 @@ internal class LoginTest {
             engFirstName = "TE",
             engLastName = "ST",
             gender = Gender.MALE,
-            birthDay = Date(Calendar.getInstance().timeInMillis),
+            birthDay = LocalDate.now(),
             email = "test@test.com",
             phoneCountry = country,
             phoneNumber = "010-0000-1111",

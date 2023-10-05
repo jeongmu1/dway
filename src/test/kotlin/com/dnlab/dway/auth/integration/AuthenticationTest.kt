@@ -13,8 +13,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.transaction.annotation.Transactional
-import java.sql.Date
-import java.util.*
+import java.time.LocalDate
 
 @SpringBootTest
 @Transactional
@@ -40,7 +39,7 @@ class AuthenticationTest : FunSpec() {
                 engFirstName = "TE",
                 engLastName = "ST",
                 gender = Gender.MALE,
-                birthDay = Date(Calendar.getInstance().timeInMillis),
+                birthDay = LocalDate.of(2023, 11, 1),
                 email = "test@test.com",
                 phoneCountry = "KR",
                 phone = "010-0000-1111",
