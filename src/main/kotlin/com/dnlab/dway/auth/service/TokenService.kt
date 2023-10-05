@@ -51,7 +51,10 @@ class TokenService(private val jwtProperties: JwtProperties) {
     fun getAuthentication(token: String): Authentication {
         val claims = getClaimsByToken(token)
         val authorities =
-            claims[authoritiesKey].toString().split(",").map { SimpleGrantedAuthority(it) }.toSet()
+            claims[authoritiesKey].toString()
+                .replace(Regex("[\\[\\]]"), "")
+                .split(",")
+                .map { SimpleGrantedAuthority(it.trim()) }.toSet()
         val principal = User(claims.subject, "", authorities)
 
         return UsernamePasswordAuthenticationToken(principal, token, authorities)

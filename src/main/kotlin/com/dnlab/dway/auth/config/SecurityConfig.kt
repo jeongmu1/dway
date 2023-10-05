@@ -3,6 +3,7 @@ package com.dnlab.dway.auth.config
 import com.dnlab.dway.auth.service.TokenService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer
@@ -14,6 +15,7 @@ import org.springframework.web.filter.CorsFilter
 
 @EnableWebSecurity
 @Configuration
+@EnableMethodSecurity(prePostEnabled = true)
 class SecurityConfig(
     private val tokenService: TokenService,
     private val corsFilter: CorsFilter,
@@ -33,7 +35,6 @@ class SecurityConfig(
         sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
         authorizeHttpRequests {
             with(it) {
-                requestMatchers("/api/flight/new").hasRole("ADMIN")
                 requestMatchers(
                     "/api/auth/**",
                     "/api/flight/**",
