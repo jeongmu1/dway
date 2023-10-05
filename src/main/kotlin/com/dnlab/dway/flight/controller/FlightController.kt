@@ -9,10 +9,8 @@ import com.dnlab.dway.flight.dto.response.NewFlightResponseDto
 import com.dnlab.dway.flight.service.FlightService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 
 @RestController
@@ -22,7 +20,8 @@ class FlightController(
 ) {
 
     @PostMapping("/new")
-    fun addFlight(requestDto: NewFlightRequestDto): ResponseEntity<NewFlightResponseDto> {
+    @PreAuthorize("hasRole('ADMIN')")
+    fun addFlight(@RequestBody requestDto: NewFlightRequestDto): ResponseEntity<NewFlightResponseDto> {
         return try {
             ResponseEntity.ok(flightService.addFlight(requestDto))
         } catch (e: NoSuchElementException) {
@@ -31,7 +30,7 @@ class FlightController(
     }
 
     @GetMapping("/daily-flight")
-    fun getFlightOfDay(requestDto: FlightOfDayRequestDto): ResponseEntity<List<FlightInfo>> {
+    fun getFlightOfDay(@RequestBody requestDto: FlightOfDayRequestDto): ResponseEntity<List<FlightInfo>> {
         return ResponseEntity.ok(flightService.findFlightInfoOfDay(requestDto))
     }
 
