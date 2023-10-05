@@ -1,7 +1,9 @@
-package com.dnlab.dway.flight.domain
+package com.dnlab.dway.booking.domain
 
 import com.dnlab.dway.auth.domain.Member
 import com.dnlab.dway.common.domain.BaseTimeEntity
+import com.dnlab.dway.flight.domain.Flight
+import com.dnlab.dway.flight.domain.FlightSeats
 import jakarta.persistence.*
 
 @Entity

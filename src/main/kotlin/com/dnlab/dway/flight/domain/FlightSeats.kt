@@ -1,5 +1,6 @@
 package com.dnlab.dway.flight.domain
 
+import com.dnlab.dway.booking.domain.Ticket
 import jakarta.persistence.*
 
 @Entity

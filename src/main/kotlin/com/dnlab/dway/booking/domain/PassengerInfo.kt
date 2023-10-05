@@ -1,4 +1,4 @@
-package com.dnlab.dway.flight.domain
+package com.dnlab.dway.booking.domain
 
 import com.dnlab.dway.auth.domain.Gender
 import com.dnlab.dway.common.domain.BaseTimeEntity
@@ -8,32 +8,32 @@ import java.sql.Date
 
 @Entity
 class PassengerInfo(
-        @Id
+    @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long,
 
-        @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
         val ticket: Ticket,
 
-        @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
         val country: Country,
 
-        @Column(length = 45, nullable = false)
+    @Column(length = 45, nullable = false)
         val firstName: String,
 
-        @Column(length = 45, nullable = false)
+    @Column(length = 45, nullable = false)
         val lastName: String,
 
-        @Column(nullable = false)
+    @Column(nullable = false)
         val gender: Gender,
 
-        @Column(length = 9, nullable = false)
+    @Column(length = 9, nullable = false)
         val passportNumber: String,
 
-        @Column(nullable = false)
+    @Column(nullable = false)
         val passportExpiration: String,
 
-        @Column(nullable = false)
+    @Column(nullable = false)
         val birthDay: Date
 ): BaseTimeEntity() {
     override fun equals(other: Any?): Boolean {

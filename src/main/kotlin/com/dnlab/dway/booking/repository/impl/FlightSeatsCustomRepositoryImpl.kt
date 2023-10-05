@@ -1,5 +1,6 @@
 package com.dnlab.dway.booking.repository.impl
 
+import com.dnlab.dway.booking.domain.QTicket
 import com.dnlab.dway.booking.dto.repository.LowestFareInfoDto
 import com.dnlab.dway.booking.repository.FlightSeatsCustomRepository
 import com.dnlab.dway.flight.domain.*

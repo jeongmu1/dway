@@ -4,6 +4,7 @@ import com.dnlab.dway.booking.dto.request.LowestFareRequestDto
 import com.dnlab.dway.booking.dto.request.Period
 import com.dnlab.dway.booking.dto.response.LowestFareInfo
 import com.dnlab.dway.booking.dto.response.LowestFaresResponseDto
+import com.dnlab.dway.booking.repository.TicketRepository
 import com.dnlab.dway.flight.dto.request.FlightOfDayRequestDto
 import com.dnlab.dway.flight.dto.response.FlightInfo
 import com.dnlab.dway.flight.dto.response.FlightSeatInfo

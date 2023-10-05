@@ -2,10 +2,10 @@ package com.dnlab.dway.booking.service
 
 import com.dnlab.dway.booking.dto.request.ItineraryInfoRequestDto
 import com.dnlab.dway.booking.dto.response.*
+import com.dnlab.dway.booking.repository.TicketRepository
 import com.dnlab.dway.flight.domain.Flight
 import com.dnlab.dway.flight.domain.FlightSeats
 import com.dnlab.dway.flight.repository.FlightRepository
-import com.dnlab.dway.flight.repository.TicketRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.lang.IllegalArgumentException
