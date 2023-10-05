@@ -27,7 +27,7 @@ configurations {
 
 group = "com.dnlab"
 version = "0.0.1-SNAPSHOT"
-val kotestVersion = "5.7.2"
+val kotestVersion = "4.4.3"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -83,7 +83,7 @@ dependencies {
     // Kotlin Test
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
     testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
-    testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.3")
+    testImplementation("io.kotest:kotest-extensions-spring:$kotestVersion")
     testImplementation("com.ninja-squad:springmockk:3.0.1")
     testImplementation("io.mockk:mockk:1.12.0")
 
