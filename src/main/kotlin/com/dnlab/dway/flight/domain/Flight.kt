@@ -1,8 +1,8 @@
 package com.dnlab.dway.flight.domain
 
+import com.dnlab.dway.common.domain.BaseTimeEntity
 import com.dnlab.dway.region.domain.Airport
 import jakarta.persistence.*
-import org.springframework.data.annotation.CreatedDate
 import java.sql.Timestamp
 
 @Entity
@@ -34,11 +34,7 @@ class Flight(
 
     @OneToMany(mappedBy = "flight", fetch = FetchType.LAZY)
     val flightSeats: MutableList<FlightSeats> = ArrayList(),
-
-    @CreatedDate
-    @Column(nullable = false)
-    var createdDate: Timestamp? = null,
-) {
+): BaseTimeEntity() {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -53,6 +49,6 @@ class Flight(
     }
 
     override fun toString(): String {
-        return "Flight(id=$id, code='$code', departureTime=$departureTime, arrivalTime=$arrivalTime, enabled=$enabled, createdDate=$createdDate)"
+        return "Flight(id=$id, code='$code', departureTime=$departureTime, arrivalTime=$arrivalTime, enabled=$enabled, createdAt=$createdAt)"
     }
 }

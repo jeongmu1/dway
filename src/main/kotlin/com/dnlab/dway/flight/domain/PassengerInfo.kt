@@ -1,6 +1,7 @@
 package com.dnlab.dway.flight.domain
 
 import com.dnlab.dway.auth.domain.Gender
+import com.dnlab.dway.common.domain.BaseTimeEntity
 import com.dnlab.dway.region.domain.Country
 import jakarta.persistence.*
 import java.sql.Date
@@ -34,7 +35,7 @@ class PassengerInfo(
 
         @Column(nullable = false)
         val birthDay: Date
-) {
+): BaseTimeEntity() {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

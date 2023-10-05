@@ -1,6 +1,7 @@
 package com.dnlab.dway.flight.domain
 
 import com.dnlab.dway.auth.domain.Member
+import com.dnlab.dway.common.domain.BaseTimeEntity
 import jakarta.persistence.*
 
 @Entity
@@ -20,7 +21,7 @@ class Ticket(
 
         @Column(nullable = false)
         val passengerCount: Int
-) {
+): BaseTimeEntity() {
         override fun equals(other: Any?): Boolean {
                 if (this === other) return true
                 if (javaClass != other?.javaClass) return false
