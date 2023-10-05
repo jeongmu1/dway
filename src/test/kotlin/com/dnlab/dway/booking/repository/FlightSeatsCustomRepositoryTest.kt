@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import java.sql.Timestamp
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 @IntegrationTest
 @SpringBootTest
@@ -72,8 +72,8 @@ internal class FlightSeatsCustomRepositoryTest {
         return Flight(
             enabled = true,
             aircraft = aircraft,
-            arrivalTime = Timestamp(System.currentTimeMillis() + 50000),
-            departureTime = Timestamp(System.currentTimeMillis()),
+            arrivalTime = LocalDateTime.now(),
+            departureTime = LocalDateTime.now(),
             code = "TW000",
             departureAirport = deptAirport,
             arrivalAirport = arriAirport

@@ -3,7 +3,7 @@ package com.dnlab.dway.flight.domain
 import com.dnlab.dway.common.domain.BaseTimeEntity
 import com.dnlab.dway.region.domain.Airport
 import jakarta.persistence.*
-import java.sql.Timestamp
+import java.time.LocalDateTime
 
 @Entity
 class Flight(
@@ -24,10 +24,10 @@ class Flight(
     val arrivalAirport: Airport,
 
     @Column(nullable = false)
-    val departureTime: Timestamp,
+    val departureTime: LocalDateTime,
 
     @Column(nullable = false)
-    val arrivalTime: Timestamp,
+    val arrivalTime: LocalDateTime,
 
     @Column(nullable = false)
     var enabled: Boolean = true,

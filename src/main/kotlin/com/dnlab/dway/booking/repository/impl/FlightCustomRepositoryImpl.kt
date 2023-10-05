@@ -6,15 +6,13 @@ import com.dnlab.dway.flight.domain.QAircraft
 import com.dnlab.dway.flight.domain.QFlight
 import com.dnlab.dway.flight.domain.QFlightSeats
 import com.querydsl.jpa.impl.JPAQueryFactory
-import java.sql.Timestamp
-import java.time.ZoneId
-import java.util.*
+import java.time.LocalDate
 
 class FlightCustomRepositoryImpl(
     private val jpaQueryFactory: JPAQueryFactory
 ) : FlightCustomRepository {
     override fun findFlightInfosBy(
-        schedule: Date,
+        schedule: LocalDate,
         deptAirportCode: String,
         arriAirportCode: String,
     ): List<Flight> {
@@ -22,17 +20,13 @@ class FlightCustomRepositoryImpl(
         val qFlightSeats = QFlightSeats.flightSeats
         val qAircraft = QAircraft.aircraft
 
-        val localDate = schedule.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-        val startOfDate = Timestamp.valueOf(localDate.atStartOfDay())
-        val endOfDate = Timestamp.valueOf(localDate.atTime(23, 59, 59))
-
         return jpaQueryFactory.selectFrom(qFlight)
             .leftJoin(qFlight.flightSeats, qFlightSeats).fetchJoin()
             .leftJoin(qFlight.aircraft, qAircraft).fetchJoin()
             .where(
                 qFlight.departureAirport.id.eq(deptAirportCode),
                 qFlight.arrivalAirport.id.eq(arriAirportCode),
-                qFlight.departureTime.between(startOfDate, endOfDate)
+                qFlight.departureTime.between(schedule.atStartOfDay(), schedule.atTime(23, 59, 59))
             ).fetch()
     }
 }

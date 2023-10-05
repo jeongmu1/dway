@@ -10,9 +10,7 @@ import com.querydsl.core.types.Projections
 import com.querydsl.core.types.dsl.Expressions
 import com.querydsl.jpa.JPAExpressions
 import com.querydsl.jpa.impl.JPAQueryFactory
-import java.sql.Timestamp
 import java.time.LocalDate
-import java.time.ZoneId
 
 class FlightSeatsCustomRepositoryImpl(
     private val jpaQueryFactory: JPAQueryFactory
@@ -33,8 +31,8 @@ class FlightSeatsCustomRepositoryImpl(
                         JPAExpressions.select(qFlight.departureTime, qFlightSeats.fare.min())
                             .from(qFlightSeats).innerJoin(qFlightSeats.flight, qFlight).where(
                                 qFlight.departureTime.between(
-                                    Timestamp.valueOf(startDay.atStartOfDay()),
-                                    Timestamp.valueOf(endDay.atTime(23, 59, 59))
+                                    startDay.atStartOfDay(),
+                                    endDay.atTime(23, 59, 59)
                                 )
                             ).groupBy(qFlight.departureTime.dayOfMonth())
                     )
@@ -43,7 +41,7 @@ class FlightSeatsCustomRepositoryImpl(
         println("$flightSeatsList")
 
         return flightSeatsList.associateBy {
-            it.flight.departureTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+            it.flight.departureTime.toLocalDate()
         }
     }
 
@@ -99,7 +97,7 @@ class FlightSeatsCustomRepositoryImpl(
             .fetch()
 
         return result.associateBy {
-            it.departureTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+            it.departureTime.toLocalDate()
         }
     }
 }

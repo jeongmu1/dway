@@ -1,5 +1,6 @@
 package com.dnlab.dway.flight.service
 
+import com.dnlab.dway.booking.repository.TicketRepository
 import com.dnlab.dway.flight.domain.Aircraft
 import com.dnlab.dway.flight.domain.Flight
 import com.dnlab.dway.flight.domain.Manufacture
@@ -15,7 +16,7 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.junit.jupiter.MockitoExtension
-import java.sql.Timestamp
+import java.time.LocalDateTime
 
 @ExtendWith(MockitoExtension::class)
 internal class AddingFlightTest {
@@ -74,8 +75,8 @@ internal class AddingFlightTest {
         code = "DW100",
         arrivalAirport = airport1,
         departureAirport = airport2,
-        departureTime = Timestamp(System.currentTimeMillis()),
-        arrivalTime = Timestamp(System.currentTimeMillis()),
+        departureTime = LocalDateTime.now(),
+        arrivalTime = LocalDateTime.now(),
         aircraft = aircraft
     )
 
@@ -85,8 +86,8 @@ internal class AddingFlightTest {
             code = "DW100",
             departureAirport = "PUS",
             arrivalAirport = "ICN",
-            departureTime = Timestamp(System.currentTimeMillis()),
-            arrivalTime = Timestamp(System.currentTimeMillis()),
+            departureTime = LocalDateTime.now(),
+            arrivalTime = LocalDateTime.now(),
             aircraftModel = "B737-800",
             flightSeatInfo = listOf()
         )

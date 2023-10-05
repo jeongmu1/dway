@@ -1,11 +1,11 @@
 package com.dnlab.dway.booking.repository
 
 import com.dnlab.dway.flight.domain.Flight
-import java.util.Date
+import java.time.LocalDate
 
 interface FlightCustomRepository {
     fun findFlightInfosBy(
-        schedule: Date,
+        schedule: LocalDate,
         deptAirportCode: String,
         arriAirportCode: String
     ): List<Flight>

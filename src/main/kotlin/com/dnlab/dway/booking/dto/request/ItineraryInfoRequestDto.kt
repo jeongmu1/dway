@@ -4,7 +4,7 @@ import com.dnlab.dway.common.annotation.validation.DateFormat
 import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.NotNull
-import java.util.Date
+import java.time.LocalDate
 
 data class ItineraryInfoRequestDto(
     @Min(0)
@@ -17,5 +17,5 @@ data class ItineraryInfoRequestDto(
     @NotEmpty
     val airportCodes: List<DeptArriAirportCode>,
     @DateFormat
-    val schedule: Date?
+    val schedule: LocalDate?
 )

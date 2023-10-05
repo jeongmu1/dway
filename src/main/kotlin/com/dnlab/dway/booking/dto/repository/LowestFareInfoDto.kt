@@ -1,10 +1,10 @@
 package com.dnlab.dway.booking.dto.repository
 
 import com.dnlab.dway.flight.domain.FareGrade
-import java.sql.Timestamp
+import java.time.LocalDateTime
 
 data class LowestFareInfoDto(
-    val departureTime: Timestamp,
+    val departureTime: LocalDateTime,
     val deptAirportCode: String,
     val arriAirportCode: String,
     val flightOperate: Boolean,
