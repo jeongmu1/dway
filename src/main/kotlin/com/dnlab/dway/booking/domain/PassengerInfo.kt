@@ -9,33 +9,40 @@ import java.sql.Date
 @Entity
 class PassengerInfo(
     @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id: Long,
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long,
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-        val ticket: Ticket,
+    val ticket: Ticket,
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-        val country: Country,
+    val country: Country,
 
     @Column(length = 45, nullable = false)
-        val firstName: String,
+    val firstName: String,
 
     @Column(length = 45, nullable = false)
-        val lastName: String,
+    val lastName: String,
 
     @Column(nullable = false)
-        val gender: Gender,
+    val gender: Gender,
 
     @Column(length = 9, nullable = false)
-        val passportNumber: String,
+    val passportNumber: String,
 
     @Column(nullable = false)
-        val passportExpiration: String,
+    val passportExpiration: String,
 
     @Column(nullable = false)
-        val birthDay: Date
-): BaseTimeEntity() {
+    val birthDay: Date,
+
+    @Column(nullable = false)
+    val additionalCarryOnBaggageWeight: Short = 0,
+
+    @Column(nullable = false)
+    val additionalCheckedBaggageWeight: Short = 0
+
+) : BaseTimeEntity() {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
