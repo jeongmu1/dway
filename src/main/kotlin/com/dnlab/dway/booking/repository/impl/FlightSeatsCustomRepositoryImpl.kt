@@ -92,8 +92,8 @@ class FlightSeatsCustomRepositoryImpl(
                     )
                 )
             ).from(qFlight)
-            .innerJoin(qFlight.flightSeats, qFlightSeats)
-            .leftJoin(qFlightSeats.tickets, qTicket)
+            .innerJoin(qFlight._flightSeats, qFlightSeats)
+            .leftJoin(qFlightSeats._tickets, qTicket)
             .fetch()
 
         return result.associateBy {

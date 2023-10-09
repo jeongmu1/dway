@@ -21,7 +21,7 @@ class FlightCustomRepositoryImpl(
         val qAircraft = QAircraft.aircraft
 
         return jpaQueryFactory.selectFrom(qFlight)
-            .leftJoin(qFlight.flightSeats, qFlightSeats).fetchJoin()
+            .leftJoin(qFlight._flightSeats, qFlightSeats).fetchJoin()
             .leftJoin(qFlight.aircraft, qAircraft).fetchJoin()
             .where(
                 qFlight.departureAirport.id.eq(deptAirportCode),
