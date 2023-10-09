@@ -22,7 +22,10 @@ class Ticket(
         val flight: Flight,
 
         @Column(nullable = false)
-        val passengerCount: Int
+        val passengerCount: Int,
+
+        @ManyToOne(fetch = FetchType.LAZY, optional = false)
+        val reservation: Reservation
 ): BaseTimeEntity() {
         override fun equals(other: Any?): Boolean {
                 if (this === other) return true
