@@ -20,9 +20,6 @@ class FlightSeats(
     @Column(nullable = false)
     val fareGrade: FareGrade,
 
-    @OneToMany(mappedBy = "flightSeats", fetch = FetchType.LAZY)
-    val tickets: MutableList<Ticket> = ArrayList(),
-
     @Column(nullable = false)
     val inflightMeal: Short, // 기내식
 
@@ -40,7 +37,13 @@ class FlightSeats(
     val fare: Int,
     @Column(nullable = false)
     val maxPassengers: Int,
-    ) {
+) {
+
+    @OneToMany(mappedBy = "flightSeats", fetch = FetchType.LAZY)
+    private val _tickets: MutableList<Ticket> = mutableListOf()
+    val tickets: List<Ticket>
+        get() = _tickets
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

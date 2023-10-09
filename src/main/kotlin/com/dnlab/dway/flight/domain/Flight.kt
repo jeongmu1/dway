@@ -31,10 +31,12 @@ class Flight(
 
     @Column(nullable = false)
     var enabled: Boolean = true,
-
-    @OneToMany(mappedBy = "flight", fetch = FetchType.LAZY)
-    val flightSeats: MutableList<FlightSeats> = ArrayList(),
 ): BaseTimeEntity() {
+    @OneToMany(mappedBy = "flight", fetch = FetchType.LAZY)
+    private val _flightSeats: MutableList<FlightSeats> = mutableListOf()
+    val flightSeats: List<FlightSeats>
+        get() = _flightSeats
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
